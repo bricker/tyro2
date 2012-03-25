@@ -1,5 +1,5 @@
 staging:
-  bin_path: '/home/birnvps/local/bin'
+  bin_path: '/usr/local/bin'
   searchd_file_path: "/home/tyro2_staging/tyro2/shared/db/sphinx/staging"
   
 production:
