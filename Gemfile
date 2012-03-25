@@ -7,15 +7,17 @@ gem "chronic"
 gem 'mysql2'
 gem 'bcrypt-ruby'
 gem 'whenever', :require => false
-gem "thinking-sphinx", "~> 2.0.11"
+gem "thinking-sphinx", "~> 2.0.11" # Error with version 2.0.5
 gem 'rails_autolink'
 
-gem "mediaelement_rails", :git => "git://github.com/tobsch/mediaelement_rails.git"
+gem "mediaelement_rails", :git => "git://github.com/tobsch/mediaelement_rails.git" # Error without the git source
 gem 'spinjs-rails'
 
 gem 'unread', :git => 'https://github.com/ledermann/unread.git'
 gem 'kaminari'
-gem 'delayed_job', :git => 'https://github.com/collectiveidea/delayed_job.git'
+
+gem 'delayed_job_active_record'
+gem "daemons" # Required by delayed_job to run workers
 
 gem 'capistrano'
 gem 'capistrano-ext'
