@@ -277,7 +277,7 @@ DEPENDENCIES
   spinjs-rails
   sqlite3
   therubyracer
-  thinking-sphinx (= 2.0.5)
+  thinking-sphinx
   twitter-bootstrap-rails
   uglifier
   unread!

@@ -7,7 +7,7 @@ gem "chronic"
 gem 'mysql2'
 gem 'bcrypt-ruby'
 gem 'whenever', :require => false
-gem 'thinking-sphinx', '2.0.5'
+gem 'thinking-sphinx'
 gem 'rails_autolink'
 
 gem "mediaelement_rails", :git => "git://github.com/tobsch/mediaelement_rails.git"
