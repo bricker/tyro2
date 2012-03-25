@@ -42,7 +42,7 @@ Tyro::Application.configure do
   config.assets.digest = true
   
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  # config.assets.precompile += %w( search.js )
+  config.assets.precompile += %w( cp.js cp.css )
   
   # Defaults to Rails.root.join("public/assets")
   # config.assets.manifest = YOUR_PATH
