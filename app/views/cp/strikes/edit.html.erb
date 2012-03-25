@@ -1,0 +1,6 @@
+<%= nav '/cp/users/nav_partials/profile_tabs', 'strikes' %>
+
+<%= box_wrapper do %>
+	<%= render :partial => 'strike_form', :locals => { :user => @user, :record => @strike, :form_title => "Edit Strike for #{@user.name}", :submit => "Update" } %><br />
+	<%= link_to "Delete Strike", cp_user_strike_path(@user, @strike), :method => :delete, :confirm => "Delete this strike?" %> (Note: Only delete a strike if it was a mistake. Otherwise <%= link_to "Mark it Resolved", toggle_resolved_cp_user_strike_path(@user, @strike), :method => :post %>.)
+<% end %>

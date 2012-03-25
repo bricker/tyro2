@@ -1,0 +1,15 @@
+<% with_show ||= false %>
+<div class="entry small" data-time="<%= playlist_entry.created_at.to_i %>">
+	<span class="time small"><%= pretty_date(playlist_entry.created_at, :only_time => true) %></span>
+	<span class="info"><%= playlist_entry.title %></span>
+	<span class="meta small">by</span>
+	<span class="info"><%= playlist_entry.artist %></span>
+	<span class="meta small from"><% if playlist_entry.album.present? %>from<% end %></span>
+	<span class="info"><%= playlist_entry.album %></span>
+	<% if with_show and playlist_entry.schedule_event.present? %>
+		<span class="meta small">on show</span>
+		<span class="info"><%= link_to playlist_entry.schedule_event.schedulable.title, playlist_entry.schedule_event.schedulable %></span>
+	<% end %>
+	<%= link_to image_tag("icons/itunes.png", :alt => "Search for this song in iTunes", :class => 'itunes-icon'), 
+		"itms://phobos.apple.com/WebObjects/MZSearch.woa/wa/advancedSearchResults?artistTerm=#{playlist_entry.artist.gsub(' ', '%20')}&songTerm=#{playlist_entry.title.gsub(' ', '%20')}" %>
+</div>

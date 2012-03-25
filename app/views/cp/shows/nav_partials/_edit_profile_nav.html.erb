@@ -1,0 +1,4 @@
+<div class="sub-nav">
+	<%= nav_link "Profile", edit_cp_show_path(@show), active_tabs.include?('profile') if @current_user.allowed_to('manage_shows') %>
+	<%= nav_link "Manage", edit_manage_cp_show_path(@show), active_tabs.include?('manage') if @current_user.allowed_to('manage_shows') %>
+</div>

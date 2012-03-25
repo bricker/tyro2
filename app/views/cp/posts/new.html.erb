@@ -1,0 +1,5 @@
+<%= nav '/cp/shows/nav_partials/show_page_tabs', 'posts' %>
+
+<%= box_wrapper do %>
+	<%= render :partial => 'post_form', :locals => { :record => @post, :form_title => "New Show Post", :submit => "Add" }%>
+<% end %>

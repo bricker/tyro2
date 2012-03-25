@@ -1,0 +1,4 @@
+<div class="sub-nav">
+	<%= nav_link "Unresolved", cp_user_strikes_path(@user, :list => 'unresolved'), active_tabs.include?('unresolved') %>
+	<%= nav_link "Resolved", cp_user_strikes_path(@user, :list => 'resolved'), active_tabs.include?('resolved') %>
+</div>

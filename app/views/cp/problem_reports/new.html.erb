@@ -1,0 +1,5 @@
+<%= nav 'main_tabs', 'mine' %>
+
+<%= box_wrapper do %>
+	  <%= render :partial => 'problem_report_form', :locals => { :record => @problem_report, :form_title => 'Open Problem Report', :submit => 'Open' } %>
+<% end %>

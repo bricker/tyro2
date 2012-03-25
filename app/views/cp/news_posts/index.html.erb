@@ -1,0 +1,6 @@
+<%= box_wrapper "News Posts", :no_tabs => true do %>
+	<%= add_button 'Add News Post', new_cp_news_post_path %>
+	<%= render @news_posts %>
+	<%= no_records_check(@news_posts, "News Posts") %>
+	<%= paginate @news_posts %>
+<% end %>

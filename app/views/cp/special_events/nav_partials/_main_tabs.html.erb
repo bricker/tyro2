@@ -1,0 +1,4 @@
+<div class="tabs">
+	<%= nav_link "Today & Later", cp_special_events_path(request.GET().merge(:list => 'today_and_later')), active_tabs.include?('today_and_later') %>
+	<%= nav_link "Before Today", cp_special_events_path(request.GET().merge(:list => 'before_today')), active_tabs.include?('before_today') %>
+</div>

@@ -1,0 +1,6 @@
+nextEvent = $("#next-event");
+<% unless @next_event.blank? %>
+	nextEvent.html("<%= escape_javascript(render :partial => 'next_event', :object => @next_event) %>");
+<% else %>
+	nextEvent.empty();
+<% end %>

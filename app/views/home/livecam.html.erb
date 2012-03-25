@@ -1,0 +1,22 @@
+<%= content_for :title, "BIRN Live Cam" %>
+<%= content_for :header do %>
+	<%= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js' %>
+	<script type="text/javascript">
+		function refreshImage() {
+			$('#webcam-image').fadeOut(400);
+			setTimeout(function() {
+				$('#webcam-image').attr('src', "http://media.thebirn.com/webcam/<%=params[:cam]%>.jpg?" + Math.random()).fadeIn(400);
+			}, 300);
+		}
+		$(document).ready(function() {
+			setInterval('refreshImage()', 30000);
+		});
+	</script>
+<% end %>
+
+<div id="webcam">
+	<h3><%= "Broadcast Room" if params[:cam] == "broadcast" %>
+	 	<%= "Live Room" if params[:cam] == 'live' %></h3>
+	<%= image_tag "http://media.thebirn.com/webcam/#{params[:cam]}.jpg", :id => 'webcam-image' %><br />
+	<%= link_to 'Broadcast', livecam_path(:cam => 'broadcast') %> - <%= link_to 'Live Room', livecam_path(:cam => 'live') %>
+</div> <!-- #webcam -->

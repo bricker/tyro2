@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:fb="https://www.facebook.com/2008/fbml">
+	<head>
+	  <title>Berklee Internet Radio Network</title>
+	  <%= stylesheet_link_tag "application" %>
+	  <%= yield :stylesheets %>
+  
+	  <%= javascript_include_tag 'application' %>
+	  <%= yield :javascript %>
+	  <%# auto_discovery_link_tag(:rss, :controller => :podcasts, :action => :rss) %>
+	  <link rel="icon" type="image/png" href="http://www.thebirn.com/favicon.jpg">
+	  <link rel="image_src" href="http://thebirn.com/images/logos/birn-header-black.png" />
+  
+	  <%= yield :header %>
+  
+	  <!-- Open Graph -->
+	  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# thebirn: http://ogp.me/ns/fb/thebirn#">
+	  <meta property="og:site_name" content="The Berklee Internet Radio Network"/>
+	  <meta property="fb:app_id" content="138917966205509"/>
+
+	  <% if content_for?(:og_tags) %>
+	  	<%= yield :og_tags %>
+	  <% else %>
+	  	<meta property="og:title" content="The Berklee Internet Radio Network"/>
+	  	<meta property="og:type" content="website"/>
+	  	<meta property="og:url" content="http://thebirn.com"/>
+	  	<meta property="og:image" content="http://thebirn.com/images/logos/birn-header-black.png"/>
+	      <meta property="og:description"
+	            content="Student-run radio network from Berklee College of Music"/>
+	  	<meta property="fb:admins" content="<%= facebook_uids_string(@management) %>"/>	  	
+	  <% end %>
+
+	</head>
+	<body>
+		<div id="main-wrapper">
+		    <% cache "sc_header" do %>
+			    <div id="header">
+				    <div id="slideshow">
+				      	<%= image_tag 'headers/mic.jpg', :alt => '', :class => 'active' %>
+				      	<%= image_tag 'headers/cds.jpg', :alt => '' %>
+				      	<%= image_tag 'headers/board.jpg', :alt => '' %>
+				      	<%= image_tag 'headers/sends.jpg', :alt => '' %>
+				    </div>
+
+				    <div id="nav">
+						<%= link_to "LISTEN", stream_path, :id => "listen", :class => 'stream-link' %>
+				    	<nav id="buttons">
+				            <%= link_to "BIRN1", stream_path(:channel => 'birn1'), "data-channel" => "birn1", :class => "stream-link", 'data-description' => @birn1_text %>
+				            <%= link_to "BIRN2", stream_path(:channel => 'birn2'), "data-channel" => "birn2", :class => "stream-link", 'data-description' => @birn2_text %>
+				            <%= link_to "BIRN3", stream_path(:channel => 'birn3'), "data-channel" => "birn3", :class => "stream-link", 'data-description' => @birn3_text %>
+				            <%= link_to "BIRN4", stream_path(:channel => 'birn4'), "data-channel" => "birn4", :class => "stream-link", 'data-description' => @birn4_text %>
+				            <%= link_to "BIRN5", stream_path(:channel => 'birn5'), "data-channel" => "birn5", :class => "stream-link", 'data-description' => @birn5_text %>
+				            <%= link_to "birn&bull;presents".html_safe, stream_path(:channel => 'birn-presents'), "data-channel" => "birn-presents", :class => "stream-link", 'data-description' => @birn_presents_text %>
+				        </nav>
+				    </div>
+
+				    <div id="channel-description"> </div>
+				    <div id="birn-logo"> </div>
+  
+				</div> <!-- header -->
+	
+				<div id="nav-bar">
+					<nav>
+						<%= link_to "Home", root_path %>
+						<%= link_to "Broadcast Schedule", schedule_path %>
+						<%= link_to "Playlist", playlist_path %>
+						<%= link_to "News", news_path %>
+						<%= link_to "Events", events_path %>
+						<%= link_to "About The BIRN", about_path %>
+					</nav>
+			<% end # cache %>
+		
+		
+					<div class="extra">
+						<div class="facebook-like">
+							<fb:like href="http://thebirn.com" send="false" layout="button_count" width="90px" height="20px" show_faces="false" colorscheme="dark" font="lucida grande"></fb:like>
+						</div>
+		
+				    	<div id="time">
+							<%= pretty_date(Time.zone.now, :only_time => true) %> EST
+						</div>
+					</div> <!-- extra -->
+					<div class="clear"></div>
+			    </div> <!-- nav-bar -->
+				
+				<% unless flash.empty? %>
+					<div id="flash_messages">
+			    		<% flash.each do |name, msg| %>
+							<div class="<%= name %>"><%= msg %></div>
+						<% end %>
+					</div>
+				<% end %>
+				
+				<div id="container">
+			        <%= yield %>
+				</div>
+
+				<div id="footer">
+					The BIRN.<br />
+				</div> <!-- #footer -->
+    	</div> <!-- #main-wrapper -->
+
+		<script type="text/javascript">
+
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-23952202-1']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+
+		</script>
+
+		<div id="fb-root"></div>
+		<script src="http://connect.facebook.net/en_US/all.js"></script>
+		<script>
+		  FB.init({
+		    appId  : '138917966205509',
+		    status : true, // check login status
+		    cookie : true, // enable cookies to allow the server to access the session
+		    xfbml  : true, // parse XFBML
+		  });
+		</script>
+	</body>
+</html>

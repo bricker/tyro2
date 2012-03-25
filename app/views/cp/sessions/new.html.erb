@@ -1,0 +1,31 @@
+<%= box_wrapper nil, :no_tabs => true do %>
+	<%= form_tag cp_sessions_path, :id => 'login' do %>
+		<fieldset>
+			<legend>Please Login</legend>
+			<ol>
+			  <li>
+				<label for="email">E-mail</label>
+				<%= text_field_tag 'email' %>
+			  </li>
+	
+			  <li>
+				<label for="password">Password</label>
+				<%= password_field_tag 'password' %>
+			  </li>
+			</ol>
+		</fieldset>
+
+		<fieldset>
+		  <%= submit_tag "Login" %>
+		</fieldset>
+		
+		<fieldset>
+		  <%= link_to "Forgot Password?", new_cp_password_reset_path %>
+		</fieldset>
+	<% end %>
+
+	<div class="need-help">
+		Having trouble logging in?<br />
+		<strong>Contact the webteam:</strong> webteam [at] thebirn.com
+	</div>
+<% end %>

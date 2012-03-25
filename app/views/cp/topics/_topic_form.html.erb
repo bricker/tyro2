@@ -1,0 +1,25 @@
+  <li>
+	<label for="title">Title</label>
+	<%= topic_form.text_field :title %>
+  </li>
+  <% if @current_user.allowed_to('manage_forums') %>
+	  <li>
+		<label for="forum">Forum</label>
+		<%= topic_form.select :forum_id, Forum.all.map { |f| [f.subject, f.id] }, :selected => forum.id %>
+	  </li>
+
+	  <li class="checkboxes">
+		<label for="locked">Locked?</label>
+		<%= topic_form.check_box :locked %>
+	  </li>
+
+	  <li class="checkboxes">
+		<label for="global">Global?</label>
+		<%= topic_form.check_box :global %>
+	  </li>
+
+	  <li class="checkboxes">
+		<label for="sticky">Sticky?</label>
+		<%= topic_form.check_box :sticky %>
+	  </li>
+  <% end %>

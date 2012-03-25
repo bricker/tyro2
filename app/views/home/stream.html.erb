@@ -1,0 +1,93 @@
+<div id="stream">
+	<% if @channel.present? %>
+		<%= content_for :title, @channel.present? ? "Listening to #{@channel[:title]}" : "Select a Channel" %>
+		<h3 class="center"><%= @channel[:title] %></h3>
+		<% stream_url = "http://streams.thebirn.com/berklee-radio/#{@channel[:file]}" %>
+		<div id="audio">
+			<audio controls="controls" preload="none" src="<%= stream_url %>" type="audio/mp3" id="stream-player"></audio>
+			<div id="temp-loading-spinner"></div><div id="temp-loading-text"></div>
+		</div>
+	<% end %>
+		
+	<div id="channel-select" class="center">
+		Select a channel: 
+		<% HomeController::Channels.each do |channel| %>
+			<%= link_to channel[:title], stream_path(:channel => channel[:channel]), :class => "stream-link", "data-channel" => channel[:channel] %>
+		<% end %>
+	</div>
+	
+	<% if @channel.present? %>
+		<div id="download-stream">
+			<a href="#" id="trouble-link">Trouble listening?</a>
+			<div id="help">
+				You have options!
+				<ul>
+					<li>If you are using an older browser (earlier than 2009): This stream will work best on the latest version of any of the following:
+						<ul>
+							<li><a href="http://www.google.com/chrome" target="_blank">Chrome (recommended)</a></li>
+							<li><a href="http://www.apple.com/safari/download/" target="_blank">Safari</a></li>
+							<li><a href="http://www.mozilla.org/firefox" target="_blank">Firefox</a></li>
+							<li><a href="http://www.opera.com/download/" target="_blank">Opera</a></li>
+							<li><a href="http://windows.microsoft.com/en-US/internet-explorer/downloads/ie" target="_blank">Internet Explorer</a></li>
+						</ul>
+					<li>If you're still having trouble, follow these steps:</li>
+						<ol>
+							<li><%= link_to "Download the stream", stream_url + ".m3u" %> (Right-Click > Save As)</li>
+							<li>Open the downloaded file in a media program, such as <a href="http://www.apple.com/itunes/" target="_blank">iTunes</a> or <a href="http://windows.microsoft.com/en-US/windows/products/windows-media-player" target="_blank">Windows Media Player</a></li>
+							<li>Your software should connect to the stream and begin playing!</li>
+						</ol>
+					</li>
+				</ul>
+			</div> <!-- #help -->
+		</div> <!-- #download-stream -->
+	<% end %>
+	
+	<%= link_to "Go to theBirn.com &raquo;".html_safe, root_path, :target => "_blank", :class => "right" %>
+</div> <!-- #stream -->
+
+<script>
+$("audio").mediaelementplayer({
+	audioWidth: 150,
+	features: ['playpause','current','volume'],
+	success: function(element) {
+		element.load();
+		element.play();
+		element.addEventListener('loadeddata', function(){
+			$("#temp-loading-text").empty();
+			$("#temp-loading-spinner").spin(false);
+		}, false);
+		
+		element.addEventListener('play', function(){
+			$("#temp-loading-text").html("Loading Stream...");
+			$("#temp-loading-spinner").spin(minnerSpinner);
+		}, false);
+		
+		element.addEventListener('pause', function(){
+			$("#temp-loading-text").html("Stream Stopped");
+			$("#temp-loading-spinner").spin(false);
+			element.load();
+		}, false);
+		
+		element.addEventListener('ended', function(){
+			$("#temp-loading-text").html("Reloading Stream...");
+			$("#temp-loading-spinner").spin(minnerSpinner);
+			element.load();
+			element.play();
+		}, false);
+	}
+});
+</script>
+
+<%= content_for :header do %>	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.stream-link').click(function(event) {
+				event.preventDefault();
+				var channel = $(this).attr('data-channel');
+				window.location = '/stream/' + channel;
+			});
+			
+			$('#trouble-link').click(function() { $('#help').toggle(); });
+		});
+	</script>
+<% end %>

@@ -1,0 +1,28 @@
+<%= nav 'manage_tabs', 'details' %>
+
+<%= box_wrapper do %>
+	<div class="profile">
+		<h2><%= @special_event.title %></h2>
+		<div class="right">
+			<div class="list-item">
+				<div class="label">Starts on</div>
+				<div class="info"><%= pretty_date(@special_event.starts_at, :time => true) %></div>
+			</div>
+			
+			<div class="list-item">
+				<div class="label">Ends on</div>
+				<div class="info"><%= pretty_date(@special_event.ends_at, :time => true) %></div>
+			</div>
+			
+			<div class="list-item">
+				<div class="label">DJs</div>
+				<div class="info"><%= @special_event.users.map(&:name).join(", ") %><%= no_records_check(@special_event.users, "Users", :message => "This event has no DJs") %></div>
+			</div>
+			
+			<div class="list-item">
+				<div class="label">Description</div>
+				<div class="info"><%= simple_format(@special_event.description) %></div>
+			</div>
+		</div>
+	</div>
+<% end %>

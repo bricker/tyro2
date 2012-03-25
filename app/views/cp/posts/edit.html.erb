@@ -1,0 +1,6 @@
+<%= nav '/cp/shows/nav_partials/show_page_tabs', 'posts' %>
+
+<%= box_wrapper do %>
+	<%= render :partial => 'post_form', :locals => { :record => @post, :form_title => "Edit Show Post", :submit => "Update" }%>
+	<%= link_to "Delete Post", cp_show_post_path(@show, @post), :method => 'delete', :confirm => "Delete this post?" %>
+<% end %>

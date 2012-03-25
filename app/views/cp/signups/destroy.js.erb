@@ -1,0 +1,3 @@
+<% signup_id = params[:signup_id] %>
+$('#<%=signup_id%>').slideUp();
+$('#<%=signup_id%>-name').html("Removed <%= @signup.name %>'s signup.").addClass("alert");

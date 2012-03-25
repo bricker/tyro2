@@ -1,0 +1,5 @@
+<div class="tabs">
+	<%= nav_link "Open Reports", cp_problem_reports_path(request.GET().merge(:list => 'open')), active_tabs.include?('open') %>
+	<%= nav_link "Closed Reports", cp_problem_reports_path(request.GET().merge(:list => 'closed')), active_tabs.include?('closed') %>
+	<%= nav_link "My Reports", cp_problem_reports_path(request.GET().merge(:list => 'mine')), active_tabs.include?('mine') %>
+</div>

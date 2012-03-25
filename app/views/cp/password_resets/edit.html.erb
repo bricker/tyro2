@@ -1,0 +1,23 @@
+<%= box_wrapper nil, :no_tabs => true do %>
+	<%= form_for [:cp, @user], :url => cp_password_reset_path(params[:id]) do |f| %>
+		<%= check_for_errors(@user) %>
+		<fieldset>
+			<legend>Reset Password</legend>
+			<ol>
+			  <li>
+				<label for="password">New Password</label>
+				<%= f.password_field :password %>
+			  </li>
+			
+			  <li>
+				<label for="password_confirmation">Confirm</label>
+				<%= f.password_field :password_confirmation %>
+			  </li>
+			</ol>
+		</fieldset>
+
+		<fieldset>
+		  <%= f.submit "Reset Password" %>
+		</fieldset>
+	<% end %>
+<% end %>

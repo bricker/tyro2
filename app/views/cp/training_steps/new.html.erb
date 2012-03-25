@@ -1,0 +1,27 @@
+<%= box_wrapper "New Training Step" do %>
+
+	<%= form_for [:cp, @training_step] do |f| %>
+		<%= check_for_errors(@training_step) %>
+	
+		<fieldset>
+		<ol>
+		  <li>
+			<label for="title">Title</label>
+			<%= f.text_field :title %>
+		  </li>
+
+		  <li>
+			<label for="position">Position</label> 
+			<% position_options = TrainingStep::PositionOptions %>
+			<%= f.select :position_before, position_options,
+						 :selected => position_options.last %>
+		  </li>	
+		</ol>
+	  </fieldset>
+
+	  <fieldset>
+	    <%= f.submit "Add Training Step" %>
+	  </fieldset>
+	<% end %>
+
+<% end %>

@@ -1,0 +1,17 @@
+.bundle
+.sass-cache/
+.svn
+.rvmrc
+.DS_Store
+log/*.log
+tmp/
+db/sphinx/
+vendor/cache/
+config/*.sphinx.conf
+
+# Sensitive files that HAVE to be kept out of version control
+config/deploy/
+config/deploy.*
+database.yml
+secrets.yml
+script/mysql_backup.sh

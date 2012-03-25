@@ -1,0 +1,13 @@
+<% signup_id = params[:user][:signup_id] %>
+<% if @user.errors.any? %>
+	var errorDiv = $('#<%=signup_id%> .error_explanation');
+	errorDiv.html("<ol>");
+	<% @user.errors.full_messages.each do |msg| %>
+		errorDiv.append("<li><%= msg %></li>");
+	<% end %>
+	errorDiv.append("</ol>");
+	errorDiv.toggle();
+<% else %>
+	$('#<%=signup_id%>').slideUp();
+	$('#<%=signup_id%>-name').append("<div class='green'>Added, Emailed!</div>").addClass("notice");
+<% end %>

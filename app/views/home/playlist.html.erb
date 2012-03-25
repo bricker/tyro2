@@ -1,0 +1,17 @@
+<div id="playlist" class="playlist two-cols">
+	<h2 class="with-gradient">Playlist</h2>
+	<%= paginate @playlist_entries %>
+	<% @playlist_entries.group_by{|e| pretty_date(e.created_at)}.each do |date, entries| %>
+		<h3><%= date %></h3>
+			<%= render :partial => 'shared/playlist_entry', :collection => entries, :locals => { :with_show => true } %>
+	<% end %>
+	<%= no_records_check(@playlist_entries, "Playlist Entries", :message => "There have not yet been any playlists.")%>
+	<%= paginate @playlist_entries %>
+</div> <!-- two-cols -->
+
+<div id="right">
+	<%= render :partial => 'shared/explore', :locals => { :tags => @tags } %>
+	<%= render :partial => 'shared/todays_events', :locals => { :record => @todays_events, :current_events => @current_events } %>
+	<%= render :partial => 'shared/featured_dj', :locals => { :record => @featured_dj }%>
+	<%= render :partial => 'shared/contact', :locals => { :contact => @contact } %>
+</div> <!-- right -->

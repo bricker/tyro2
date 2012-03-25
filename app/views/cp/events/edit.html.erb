@@ -1,0 +1,6 @@
+<%= nav 'event_tabs', 'edit_details' %>
+
+<%= box_wrapper do %>
+	<%= render :partial => 'event_form', :locals => { :record => @event, :form_title => 'Edit Event', :submit => 'Update' } %>
+	<%= link_to "Remove Event", cp_event_path(@event), :method => 'delete', :confirm => "Remove this event?", :class => 'delete-link' %>
+<% end %>

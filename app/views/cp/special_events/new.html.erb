@@ -1,0 +1,5 @@
+<%= nav 'main_tabs' %>
+
+<%= box_wrapper do %>
+	<%= render :partial => 'special_event_form', :locals => { :record => @special_event, :form_title => 'Add Special Event', :submit => 'Add', :fill_dates => false } %>
+<% end %>

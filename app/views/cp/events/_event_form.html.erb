@@ -1,0 +1,33 @@
+<%= form_for([:cp, record]) do |f| %>
+  	<legend><%= form_title %></legend>
+  	<%= check_for_errors(record) %>
+	
+	<fieldset>
+		<ol>		
+		  	<li>
+				<label for="title">Title</label>
+				<%= f.text_field :title %>
+		  	</li>
+		
+		  	<%= f.fields_for :schedule_event do |s| %>
+				<li>
+					<label for="event_type">Event Type</label>
+					<%= s.select :event_type, ScheduleEvent::Types.map { |type| [type[:title], type[:id]]}, :selected => record.new_record? ? list : record.event_type %>
+			  	</li>
+				<%= render :partial => '/cp/schedule_events/date_fields', :locals => { :record => record, :s => s } %>
+		  	<% end %>
+		
+			<%= render :partial => "/cp/tags/tags_field", :locals => { :f => f, :record => record } %>
+		  	<%= render :partial => '/cp/users/dj_field', :locals => { :f => f, :record => record, :optional => true }%>
+					
+		  	<li>
+				<label for="description">Description</label>
+				<%= f.text_area :description, :size => "40x7" %>
+		  	</li>
+		</ol>
+	</fieldset>
+  
+	<fieldset>
+    	<%= f.submit submit %>
+  	</fieldset>
+<% end %>

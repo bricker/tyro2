@@ -1,0 +1,8 @@
+You are receiving this message because you are subscribed to the "<%= @forum.subject %>" forum in the BIRN Control Panel.
+
+There has been a new Topic posted in <%= @forum.subject %>:
+Title: <%= @topic.title %>
+Started by: <%= @topic.user.name %>
+Link to Topic: <%= cp_topic_messages_url(@topic) %>
+
+To unsubscribe from this Forum, go to: <%= cp_forum_unsubscribe_url(@forum) %> 

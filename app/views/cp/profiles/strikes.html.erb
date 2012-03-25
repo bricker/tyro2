@@ -1,0 +1,13 @@
+<%= nav 'profile_tabs', 'strikes' %>
+
+<%= box_wrapper do %>
+	<h3>You have <%=@user.total_strikes%> unresolved strikes</h3>
+	<div class="list strikes">
+		<% @strikes.each do |strike| %>
+			<div class="row">
+				<div class="name"><%= strike.reason %> on <%= pretty_date(strike.offense_on, :short => true) %></div>
+				<div class="status"><%= pluralize(strike.severity, "strike") %></div>
+			</div>
+		<% end %>
+	</div>
+<% end %>

@@ -1,0 +1,8 @@
+<%= nav 'profile_tabs', 'training' %>
+<%= nav 'training_nav', 'manage' %>
+
+<%= box_wrapper @user.name do %>
+	<%= form_for [:cp, @user], :url => update_training_progress_cp_user_path do |f| %>
+		<%= render :partial => 'password_fields', :locals => { :f => f } %>
+	<% end %>
+<% end %>

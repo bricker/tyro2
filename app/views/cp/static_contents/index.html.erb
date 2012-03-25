@@ -1,0 +1,14 @@
+<%= box_wrapper "Static Content", :no_tabs => true do %>
+	<div class="list static-contents">
+		<% @static_contents.each do |content| %>
+			<div class="row">
+				<div class="name"><%= content.text_id %></div>
+				<div class="description"><%= content.description %></div>
+				<div class="links">
+					<%= link_to "Edit", edit_cp_static_content_path(content) %>
+				</div>
+			</div>
+		<% end %>
+		<%= no_records_check(@static_contents, "Static Content Blocks") %>
+	</div>
+<% end %>

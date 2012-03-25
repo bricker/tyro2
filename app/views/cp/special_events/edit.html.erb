@@ -1,0 +1,5 @@
+<%= nav 'manage_tabs', 'edit_details' %>
+
+<%= box_wrapper do %>
+	<%= render :partial => 'special_event_form', :locals => { :record => @special_event, :form_title => 'Edit Special Event', :submit => 'Update', :fill_dates => true } %>
+<% end %>

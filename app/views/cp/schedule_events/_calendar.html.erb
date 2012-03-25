@@ -1,0 +1,54 @@
+<% schedulable_type ||= nil
+   schedulable_id ||= nil %>
+
+<%= content_for :stylesheets do %>
+	<%= stylesheet_link_tag 'fullcalendar.css' %>
+<% end %>
+
+<%= content_for :javascript do %>
+	<%= javascript_include_tag 'fullcalendar.js' %>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var date = new Date(<%= Time.zone.now.to_i %>);
+			var d = date.getDate();
+			var m = date.getMonth();
+			var y = date.getFullYear();
+
+			var schedule = $('#schedule').fullCalendar({
+				editable: true,  
+				selectable: true,
+				selectHelper: true,
+				theme: false,
+				slotMinutes: 60,
+				height: 620,
+			  	allDaySlot: false,
+				firstHour: 8,
+				lazyFetching: false,
+		        events: "/cp/schedule_events?schedulable_type=<%=schedulable_type%>&schedulable_id=<%=schedulable_id%>",
+		
+			  eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc){
+				confirmAndUpdate(event, dayDelta, minuteDelta, revertFunc, 'drop');
+			  },
+			
+			  eventResize: function(event, dayDelta, minuteDelta, revertFunc){
+				confirmAndUpdate(event, dayDelta, minuteDelta, revertFunc, 'resize');
+			  },
+			
+				select: function(eventStart, eventEnd, allDay, jsEvent) {
+				  	eventForm("New Schedule Event");
+				   	$.ajax({
+				       type : 'GET',
+				       url : "/cp/schedule_events/new?schedulable_type=<%=schedulable_type%>&schedulable_id=<%=schedulable_id%>&start="+$.fullCalendar.formatDate(eventStart, "u")+"&end="+$.fullCalendar.formatDate(eventEnd, "u"),
+				       dataType : 'script'
+				    });
+			  	} // select
+			});
+		});
+	</script>
+<% end %>
+
+<div id="loading"></div>
+<div id="event-success"></div>
+<div id="schedule"></div>
+
+<div id="event-dialog"></div>

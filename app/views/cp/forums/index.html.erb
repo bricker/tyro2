@@ -1,0 +1,35 @@
+<%= forum_header {} %>
+
+<div id='forum-list'>
+	<% @forums.each do |forum| %>
+		<div class='item forum'>
+			<div class='status'><%= image_tag @unread_topics.any? { |t| forum.topics.include?(t) } ? "icons/Knob Green.png" : "icons/Knob Grey.png" %></div>
+			<div class='info linked'>
+				<div class='subject'><%= link_to forum.subject, cp_forum_topics_path(forum) %></div>
+				<div class='description'><%= forum.description %></div>
+				<div class='manage'>
+					<% unless forum.topics.empty? %>
+						Latest activity <%= distance_of_time_in_words(Time.zone.now, forum.topics.first.updated_at) %> ago. 
+					<% else %>
+						No activity yet.
+					<% end %><%= link_to("Edit Forum", edit_cp_forum_path(forum)) if @current_user.allowed_to('manage_forums') %>	
+				</div>
+			</div>
+			<div class='last-post linked'>
+				<% unless forum.topics.empty? %>
+					<% recent_topic = forum.most_recently_active_topic 
+					   last_reply = recent_topic.most_recent_reply%>
+					Last Post in <%= link_to recent_topic.title, cp_topic_messages_path(recent_topic, :page => recent_topic.last_page, :anchor => last_reply.id) %> <br/>
+					by <%= link_to last_reply.user.name, cp_user_path(last_reply.user) %>
+				<% else %>
+					No topics yet.
+				<% end %>
+			</div>
+			<div class="clear"></div>
+		</div>
+	<% end %>
+	<br />
+	<div class="edit-link"><%= link_to "Add Forum", new_cp_forum_path if @current_user.allowed_to('manage_forums')%></div>
+</div>
+
+<%= no_records_check(@forums, 'Forums') %>

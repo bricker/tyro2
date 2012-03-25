@@ -1,0 +1,6 @@
+<div class="tabs">
+	<%= nav_link "View Profile", cp_profile_path, active_tabs.include?('view_profile') %>
+	<%= nav_link "Edit Profile", edit_cp_profile_path, active_tabs.include?('edit_profile') %>
+	<%= nav_link "Training", training_progress_cp_profile_path, active_tabs.include?('training') if @user.roles.exists?(:title => 'noob') %>
+	<%= nav_link "Strikes", strikes_cp_profile_path, active_tabs.include?('strikes') %>
+</div>

@@ -1,0 +1,23 @@
+A guest request has been made for the BIRN.
+
+DJ Name: <%= @user.name %>
+DJ E-mail: <%= @user.email %>
+
+Show Name: <%= @show.title %>
+Show Time: <%= @show.next.starts_at.strftime("%A, %l%p") %>-<%= @show.next.ends_at.strftime("%l%p") %>
+
+Date of Guest Appearance: <%= Time.parse(@params[:appearance_date]).strftime("%A, %B %e, %Y") %>
+Guest Information: 
+<%= params[:guest_information] %>
+
+Artist Website: <%= params[:artist_website] %>
+
+Popularity: <%= params[:popularity] %>
+Nature of Apperance: <%= params[:appearance_type] %>
+Live Room Needed? <%= params[:live_room_needed] == 1 ? "Yes" : "No" %>
+
+Reason for Guest:
+<%= params[:reason] %>
+
+Love,
+- BIRN Guest Requests Robot

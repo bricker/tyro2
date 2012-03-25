@@ -1,0 +1,43 @@
+<%= box_wrapper "Signups", :no_tabs => true do %>
+	<div class="list">
+		<% @signups.each do |signup| %>
+		<h3 id="<%=signup.id%>-name"><strong><%= signup.name %></strong> - Submitted on <strong><%= pretty_date(signup.created_at, :time => true) %></strong></h3>
+			<div class="signup" id="<%= signup.id %>">
+				<div class="signup-left">
+					<div class="signup-attribute"><strong>Student ID:</strong> <%= signup.student_id %></div>
+					<div class="signup-attribute"><strong>Major:</strong> <%= signup.major %></div>
+					<div class="signup-attribute"><strong>Semester:</strong> <%= signup.semester_level %></div><br />
+					<div class="signup-attribute"><strong>Email:</strong> <%= signup.email %></div>
+					<div class="signup-attribute"><strong>Phone:</strong> <%= signup.phone_number %></div><br />
+					<div class="signup-attribute"><strong>Preferred Genres:</strong> <%= signup.preferred_genres %></div><br />
+					<div class="signup-attribute"><strong>Interest in BIRN:</strong> <%= signup.interest %></div>
+					<div class="clear"></div>
+				</div>
+				<div class="signup-right">
+					<strong>Preferred Slots</strong> <br />
+					<ol>
+						<% signup.preferred_slots.split("--").each do |slot| %>
+							<li><%=slot%></li>
+						<% end %>
+					</ol>
+					<div class="add-user">
+						<%= link_to "Add", cp_users_path(:user => { :signup_id => signup.id, :name => signup.name, :email => signup.email, :phone_number => signup.phone_number,
+																					 :about => "Hi, I'm #{signup.name}! I'm in my #{signup.semester_level.to_i.ordinalize} semester at Berklee, and my major is #{signup.major}.\n 
+																							    My favorite styles of music are #{signup.preferred_genres.split(",").to_sentence}..." }), 
+															:method => :post, :remote => true, :class => 'submit-link', :confirm => "Add #{signup.name}?" %>
+						
+						<div class="clear"></div>
+					</div>
+					<div class="remove-user">
+						<%= link_to "Remove signup", cp_signup_path(signup, :signup_id => signup.id), :remote => true, :method => :delete, :confirm => "Remove this signup?" %>
+					</div>
+					<div class="error_explanation"></div>
+					<div class="clear"></div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		<% end %>
+		<%= no_records_check(@signups, "Signups") %>
+	</div>
+<% end %>
+			

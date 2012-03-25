@@ -1,0 +1,23 @@
+<%= nav 'show_page_tabs', 'playlist' %>
+
+<%= content_for :javascript do %>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#playlist_schedule_event_id").change(function(){ /* playlist selector */
+				window.location = "/cp/shows/<%= @show.to_param %>/playlist/" + $(this).find('option:selected').val();
+			});
+		});
+	</script>
+<% end %>
+
+<%= box_wrapper do %>
+	<h3>Playlist for 
+		<% if @schedule_events.count > 1 %>
+			<%= select 'playlist', 'schedule_event_id', @schedule_events.map{|event| ["#{pretty_date(event.starts_at, :time => true)} - #{pretty_date(event.ends_at, :only_time => true)}", event.id]}, :selected => @schedule_event.id %>
+		<% else %>
+			<%= "#{pretty_date(@schedule_event.starts_at, :time => true)} - #{pretty_date(@schedule_event.ends_at, :only_time => true)}" %>
+		<% end %>
+	</h3>
+	
+	<%= render :partial => 'cp/playlist_entries/playlist', :locals => { :schedule_event => @schedule_event } %>
+<% end %>

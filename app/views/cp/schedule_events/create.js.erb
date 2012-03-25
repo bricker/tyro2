@@ -1,0 +1,12 @@
+<% if @event.errors.any? %> 
+	$('#event-dialog .alert').html('Invalid fields.').show();
+<% else %>
+	$('#schedule').fullCalendar('unselect');
+	$('#event-dialog').dialog('destroy');											
+	$('#event-success').html('Added Event.').fadeIn('1000').delay('5000').fadeOut('1000');
+	$('#schedule').fullCalendar('renderEvent', <%= raw @event.to_json %>, false);
+	
+	<% if params[:recur_through].present? %>
+		$('#event-success').html('Recurring Events being added...').fadeIn('1000').delay('5000').fadeOut('1000');
+	<% end %>
+<% end %>

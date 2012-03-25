@@ -1,0 +1,28 @@
+<div id="left">
+	<%= render :partial => 'shared/blogs', :locals => { :records => @blogs }%>
+	<%= render :partial => 'shared/twitter' %>
+	<%= render :partial => 'shared/mbj', :locals => { :records => @mbj_items } %>
+	<%= render :partial => 'shared/links', :locals => { :links => @links } %>
+</div> <!-- left -->
+
+<div class="middle">
+	<h2 class="with-gradient">BIRN Events</h2>
+	<div class="sub-nav">
+		<%= link_to "BIRN1", birn1_events_path, :class => params[:event_type] == 'birn1' ? 'active' : nil %>
+		<%= link_to "BIRN2", birn2_events_path, :class => params[:event_type] == 'birn2' ? 'active' : nil %>
+		<%= link_to "birn&bull;presents".html_safe, birn_presents_events_path, :class => params[:event_type] == 'birn-presents' ? 'active' : nil %>
+	</div>
+	<% @schedule_events.each do |event| %>
+		<%= render :partial => 'event_info', :locals => { :event => event.schedulable } %>
+	<% end %>
+	<%= paginate @schedule_events %>
+	<%= no_records_check(@schedule_events, "#{params[:event_type]} Events") %>	
+
+</div> <!-- middle -->
+
+<div id="right">
+	<%= render :partial => 'shared/explore', :locals => { :tags => @tags } %>
+	<%= render :partial => 'shared/todays_events', :locals => { :record => @todays_events, :current_events => @current_events } %>
+	<%= render :partial => 'shared/featured_dj', :locals => { :record => @featured_dj } %>
+	<%= render :partial => 'shared/contact', :locals => { :contact => @contact } %>
+</div> <!-- right -->

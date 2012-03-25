@@ -1,0 +1,46 @@
+<%= nav 'profile_tabs', 'view_profile' %>
+
+<%= box_wrapper do %>
+
+	<div class="profile">
+		<div class="name"><%= @show.title %></div>
+		<div class="left">
+			<%= link_to display_avatar(@show, "medium"), @show.avatar.url(:original), :class => 'lightbox', :title => @show.title %><br /><br />
+			<%= link_to "View on TheBirn.com", show_path(@show) %>
+		</div>
+		<div class="right">
+			<div class="list-item">
+				<div class="label">Genre</div>
+				<div class="info"><%= @show.genre %></div>
+			</div>
+			
+			<div class="list-item">
+				<div class="label">Tags</div>
+				<div class="info"><%= @show.tags.map(&:name).join(", ") %></div>
+			</div>
+			
+			<div class="list-item">
+				<div class="label">DJs</div>
+				<div class="info"><%= @show.users.map { |user| link_to(user.name, cp_user_path(user)) }.join(", ").html_safe %></div>
+			</div>
+			
+			<div class="list-item">
+				<div class="label">Description</div>
+				<div class="info"><%= simple_format(@show.description) %></div>
+			</div>
+			
+			<div class="list-item">
+				<div class="label">URL</div>
+				<div class="info"><%= link_to "thebirn.com/shows/#{@show.url_slug}", show_path(@show.url_slug) %></div>
+			</div>
+			
+			<div class="list-item">
+				<div class="label">Additional Info</div>
+				<div class="info">
+					This show is currently <strong><%= @show.active? ? "Active" : "Inactive" %></strong>.<br />
+					Created in <strong><%= @show.created_at.strftime("%B of %Y") %></strong>.
+				</div>
+			</div>
+		</div>
+	</div>
+<% end %>

@@ -1,0 +1,24 @@
+<%= forum_header(:forum => @forum) {} %>
+
+
+<%= box_wrapper nil, :no_tabs => true do %>
+	<%= form_for [:cp, @forum] do |f| %>
+		<legend>Edit Forum</legend>
+	  	<%= check_for_errors(@forum) %>
+		<fieldset>
+			<ol>
+				<%= render :partial => 'forum_form', :object => f %>
+		  		<li>
+					<label for="position">Position</label> 
+					<% position_options = Forum::PositionOptions %>
+					<%= f.select :position_before, position_options.reject {|forum| @forum.position == forum[1]}, 
+						 		 :selected => position_options[position_options.index {|p| p[1] == @forum.position} - 1][1] %>
+		  		</li>
+			</ol>
+		</fieldset>
+	  	<fieldset>
+	    	<%= f.submit "Update Forum" %>
+	  	</fieldset>
+	<% end %>
+	<%= link_to "Delete Forum", cp_forum_path(@forum), :method => 'delete', :confirm => "Delete this forum?", :class => 'delete-link' %> (Topics &amp; Messages will be preserved).
+<% end %>

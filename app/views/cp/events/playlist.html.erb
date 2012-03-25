@@ -1,0 +1,5 @@
+<%= nav 'event_tabs', 'playlist' %>
+
+<%= box_wrapper do %>
+	<%= render :partial => 'cp/playlist_entries/playlist', :locals => { :schedule_event => @event.schedule_event } %>
+<% end %>

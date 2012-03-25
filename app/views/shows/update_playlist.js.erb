@@ -1,0 +1,6 @@
+entries = $(".playlist.refresh-single .playlist-group");
+<% if @playlist_entries.blank? %>
+	entries.html("There is no playlist yet.");
+<% else %>
+	entries.html("<%=raw escape_javascript(render(:partial => 'shared/playlist_entry', :collection => @playlist_entries)) %>");
+<% end %>

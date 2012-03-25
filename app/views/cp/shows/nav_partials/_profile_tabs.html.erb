@@ -1,0 +1,9 @@
+<h2><%= @show.title %></h2>
+<div class="tabs">
+	<%= nav_link "View Profile", cp_show_path(@show), active_tabs.include?('view_profile') %>
+	<%= nav_link "Edit Profile", edit_cp_show_path(@show), active_tabs.include?('edit_profile') if @current_user.allowed_to('manage_shows') or @show.users.include?(@current_user) %>
+	<%= nav_link "Schedule", schedule_cp_show_path(@show), active_tabs.include?('schedule') if @current_user.allowed_to('manage_schedule') %>
+	<span class="nav-spacer">&nbsp;</span>
+	<%= nav_link "Manage Show Page", cp_show_posts_path(@show), false, :class => 'external' if @current_user.allowed_to('manage_shows') or @show.users.include?(@current_user) %>
+	<%= nav_link "List Shows", cp_shows_path, false, :class => 'external' %>
+</div>

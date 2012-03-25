@@ -1,0 +1,86 @@
+<%= box_wrapper "Sign Up for Training", :no_tabs => true do %><br />
+	<%= @message ? @message.content.html_safe : "" %>
+	<% if signups_open %>
+		<%= form_for [:cp, @signup] do |f| %>
+			<%= check_for_errors(@signup) %>
+
+			<fieldset>
+			<ol>
+			  <li>
+				<label for="name">Name</label>
+				<%= f.text_field :name %>
+			  </li>
+
+			  <li>
+				<label for="student_id">Student ID</label>
+				<%= f.text_field :student_id, :class => 'short' %>
+			  </li>
+
+			  <li>
+				<label for="email">Email</label>
+				<%= f.text_field :email %>
+			  </li>	
+	
+			  <li>
+				<label for="email_confirmation">Confirm Email</label>
+				<%= f.text_field :email_confirmation %>
+			  </li>
+
+			  <li>
+				<label for="phone_number">Phone</label>
+				<%= f.text_field :phone_number %>
+			  </li>	
+	
+			  <li class="short">
+				<label for="semester_level">Semester Level</label>
+				<%= f.text_field :semester_level, :class => 'short' %>
+			  </li>
+	
+			  <li>
+				<label for="major">Major</label>
+				<%= f.text_field :major %>
+			  </li>
+	
+			  <li>
+				<label for="interest">What interests you about the BIRN?</label>
+				<%= f.text_area :interest %>
+			  </li>
+	
+			  <li>
+				<label for="preferred_genres">Preferred Genres<br /><span class="note">Minimum 3</span></label>
+				<%= f.text_field :preferred_genres, :placeholder => 'jazz, rock, folk' %>
+			  </li>
+			</ol>
+		  </fieldset>
+
+		  <fieldset>
+			<legend>Preferred Training Slots</legend>
+			Please select four preferred training slots, in order of preference.
+			<ol>
+			<% 4.times do %>
+				<li>
+				<%= select_tag 'preferred_slots[]', 
+					options_for_select(["Mondays, 7:30am - 10:00am",
+										"Mondays, 9:30am - 12:00pm",
+										"Tuesdays, 7:30am - 10:00am",
+										"Tuesdays, 9:30am - 12:00pm",
+										"Wednesdays, 7:30am - 10:00am",
+										"Wednesdays, 9:30am - 12:00pm",
+										"Thursdays, 7:30am - 10:00am",
+										"Thursdays, 9:30am - 12:00pm",
+										"Fridays, 7:30am - 10:00am",
+										"Fridays, 9:30am - 12:00pm",
+										"Saturdays, 7:30am - 10:00am",
+										"Saturdays, 9:30am - 12:00pm"
+										]), {:prompt => "Select:"} %>
+				</li>
+			<% end %>
+			</ol>
+		  </fieldset>
+
+		  <fieldset>
+		    <%= f.submit "Sign Up" %>
+		  </fieldset>
+		<% end %>
+	<% end %>
+<% end %>

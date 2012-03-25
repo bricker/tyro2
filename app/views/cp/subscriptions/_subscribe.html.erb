@@ -1,0 +1,8 @@
+<% record_class = record.class.to_s %>
+<div class="legend">
+	<% if @current_user.subscriptions.exists?(:subscribable_id => record.id, :subscribable_type => record_class) %>
+		<%= link_to "Unsubscribe", polymorphic_url([:cp, record, :unsubscribe]) %> to stop receiving e-mail notifications of new activity in this <%= record_class %>.
+	<% else %>
+		<%= link_to "Subscribe", polymorphic_url([:cp, record, :subscribe]) %> to receive e-mail notifications of new activity in this <%= record_class %>.
+	<% end %>
+</div>

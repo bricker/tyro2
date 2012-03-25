@@ -1,0 +1,5 @@
+<div class="sub-nav">
+	<strong>Order:</strong>
+	<%= nav_link "Date Descending", cp_events_path(request.GET().merge(:order => 'desc')), active_tabs.include?('desc') %>
+	<%= nav_link "Date Ascending", cp_events_path(request.GET().merge(:order => 'asc')), active_tabs.include?('asc') %>
+</div>

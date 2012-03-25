@@ -1,0 +1,21 @@
+<%= nav 'main_tabs', params[:list] || 'birn1' %>
+<%= nav 'list_filters', params[:order] || 'desc' %>
+
+<%= box_wrapper do %>
+	<%= add_button 'Add Event', new_cp_event_path(:list => params[:list]) %>
+	
+	<div class="list event">	
+		<% @events.each do |event| %>
+			<div class="row">
+				<div class="name"><%= link_to event.title, cp_event_path(event) %></div>
+				<div class="status"><%= pretty_date(event.starts_at, :time => true) %></div>
+				<div class="links">
+					<%= link_to "Details", cp_event_path(event) %>
+					<%= link_to "Edit Details", edit_cp_event_path(event) %>
+					<%= link_to "Playlist", playlist_cp_event_path(event) %>
+				</div> 
+			</div>
+		<% end %>
+		<%= no_records_check(@events, "Events") %>
+	</div>
+<% end %>

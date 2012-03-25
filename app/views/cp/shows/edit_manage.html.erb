@@ -1,0 +1,30 @@
+<%= nav 'profile_tabs', 'edit_profile' %>
+<%= nav 'edit_profile_nav', 'manage'%>
+
+<%= box_wrapper do %>
+
+	<%= form_for [:cp, @show] do |f| %>
+		<%= check_for_errors(@show) %>
+	
+	  <fieldset>
+		<legend>Manage <%= @show.title %></legend>
+		<ol>
+		  <li>
+			<label for="url_slug">URL Slug</label>
+			<%= f.text_field :url_slug %>
+		  </li>
+		</ol>
+	  </fieldset>
+
+
+	  <fieldset>
+		<ol>
+			<%= render :partial => '/cp/users/dj_field', :locals => { :record => @show, :f => f }%>
+		</ol>
+	  </fieldset>
+
+	  <fieldset>
+	    <%= f.submit "Update Show Info" %>
+	  </fieldset>
+	<% end %>
+<% end %>

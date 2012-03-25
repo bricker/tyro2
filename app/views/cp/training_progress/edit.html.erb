@@ -1,0 +1,23 @@
+<%= nav '/cp/users/nav_partials/profile_tabs', 'training' %>
+<%= nav 'manage_nav', 'manage' %>
+
+<%= box_wrapper do %>
+	<%= form_for [:cp, @user], :url => cp_user_training_progress_path(@user) do |f| %>
+		<%= check_for_errors(@user) %>
+	
+		<fieldset>
+			<ol>
+				<% @training_steps.each do |step| %>
+					<li>
+						<%= check_box_tag "user[training_step_ids][]", step.id, @user.training_steps.include?(step), :id => "user_training_step_id_#{step.id}" %>
+						<%= step.title %>
+					</li>
+				<% end %>
+			</ol>
+		</fieldset>
+	    <fieldset>
+		  <%= f.hidden_field :id %>
+	      <%= f.submit "Update" %>
+	    </fieldset>
+	<% end %>
+<% end %>

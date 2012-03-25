@@ -1,0 +1,35 @@
+<%= content_for :og_tags do %>
+	<meta property="fb:admins" content="<%= facebook_uids_string(@event.users + @management) %>"/>
+	<meta property="og:title" content="<%= @event.title %>"/>
+	<meta property="og:type" content="thebirn:event"/>
+	<meta property="og:url" content="http://thebirn.com<%= url_for @event %>"/>
+	<meta property="og:image" content="http://thebirn.com/images/logos/birn-header-black.png"/>
+    <meta property="og:description"
+          content="<%= "Live on #{ScheduleEvent.get_event_type(@event.schedule_event.event_type)[:title]}, #{pretty_date(@event.starts_at, :time => true)}" %>"/>
+<% end %>
+
+<div id="left">
+	<%= render :partial => 'shared/blogs', :locals => { :records => @blogs }%>
+	<%= render :partial => 'shared/twitter' %>
+	<%= render :partial => 'shared/mbj', :locals => { :records => @mbj_items } %>
+	<%= render :partial => 'shared/links', :locals => { :links => @links } %>
+</div> <!-- left -->
+
+<div id="events" class="middle">
+	<%= render :partial => 'event_info', :locals => { :event => @event } %>
+	
+	<h2>Playlist</h2>
+	<div id="playlist">
+		<% @event.schedule_event.playlist_entries.each do |entry| %>
+			<%= render :partial => 'shared/playlist_entry', :locals => { :playlist_entry => entry } %>
+		<% end %>
+		<%= no_records_check(@event.schedule_event.playlist_entries, "Playlist Entries", :message => "There is no playlist yet.")%>
+	</div> <!-- playlist -->
+</div> <!-- middle -->
+
+<div id="right">
+	<%= render :partial => 'shared/explore', :locals => { :tags => @tags } %>
+	<%= render :partial => 'shared/todays_events', :locals => { :record => @todays_events, :current_events => @current_events } %>
+	<%= render :partial => 'shared/featured_dj', :locals => { :record => @featured_dj } %>
+	<%= render :partial => 'shared/contact', :locals => { :contact => @contact } %>
+</div> <!-- right -->

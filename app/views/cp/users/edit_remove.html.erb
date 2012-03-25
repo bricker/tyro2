@@ -1,0 +1,25 @@
+<%= nav 'profile_tabs', 'edit_profile' %>
+<%= nav 'edit_profile_nav', 'remove' %>
+
+<%= box_wrapper do %>
+	<%= form_for [:cp, @user], :url => remove_cp_user_path(@user) do |f| %>
+		<%= check_for_errors(@user) %>
+		<fieldset>
+			<ol>			
+			  <li>
+				<label for="deleted_at">Delete <%= @user.name %>?</label>
+				<%= f.check_box :deleted_bool %> <span class="info"><strong>Beware:</strong> This clears out everything for this user.</span>
+			  </li>
+			
+			  <li>
+				<label for="deleted_at_confirmation">Seriously?</label>
+				<span class="info"><strong>HEY!</strong> This can't be undone!</span> <%= f.check_box :deleted_bool_confirmation %> 
+			  </li>
+			</ol>
+		</fieldset>
+
+		<fieldset>
+			<%= f.submit "Remove User" %>
+		</fieldset>
+	<% end %>
+<% end %>

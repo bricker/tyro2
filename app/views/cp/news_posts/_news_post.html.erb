@@ -1,0 +1,5 @@
+<div class="post">
+	<h2><%= news_post.title %></h2>
+	<div class="info">posted on <%= pretty_date(news_post.created_at, :time => true) %>. <%= link_to "edit", edit_cp_news_post_path(news_post), :class => 'edit-link' %></div>
+	<div class="content"><%= news_post.body.html_safe %></div>
+</div>

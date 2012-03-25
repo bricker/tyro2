@@ -1,0 +1,6 @@
+$('#event-dialog').html("<%= escape_javascript(render :partial => 'event_form', 
+																												:locals => { :schedule_event => @event, 
+																												:schedulable_type => @schedulable.class.to_s, 
+																												:schedulable => @schedulable,
+																												:title => 'Edit Event' }) %>");
+$('#loading').spin(false);

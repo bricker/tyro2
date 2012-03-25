@@ -1,0 +1,13 @@
+<div class="sub-nav">
+	<strong>List: </strong>
+	<%= nav_link "All Active", cp_users_path(request.GET().merge(:filter => 'active')), active_tabs.include?('active') %>
+	<%= nav_link "Noobs", cp_users_path(request.GET().merge(:filter => 'noobs')), active_tabs.include?('noobs') %>
+	<%= nav_link "Active DJs", cp_users_path(request.GET().merge(:filter => 'active_djs')), active_tabs.include?('active_djs') %>
+	<%= nav_link "Management", cp_users_path(request.GET().merge(:filter => 'management')), active_tabs.include?('management') %>
+	<%= nav_link "Alumni", cp_users_path(request.GET().merge(:filter => 'alumni')), active_tabs.include?('alumni') %>
+	<%= nav_link "Inactive", cp_users_path(request.GET().merge(:filter => 'inactive')), active_tabs.include?('inactive') %>
+	<span class="nav-spacer">&nbsp;</span>
+	<strong>Order: </strong>
+	<%= nav_link "Name", cp_users_path(request.GET().merge(:order => 'name')), active_tabs.include?('name') %>
+	<%= nav_link "Strikes", cp_users_path(request.GET().merge(:order => 'strikes')), active_tabs.include?('strikes') if @current_user.allowed_to('manage_strikes', 'manage_users_full', 'manage_user_info')%>
+</div>

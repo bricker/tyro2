@@ -1,0 +1,10 @@
+<div class="sub-nav">
+	<%= nav_link "All", request.GET().merge(:category => 'all'), active_tabs.include?('all') %>
+	<% ProblemReport::Categories.each do |category| %>
+		<%= nav_link category.humanize, request.GET().merge(:category => category), active_tabs.include?(category) %>
+	<% end %>
+	
+	<div class='nav-spacer'> </div>
+	<%= nav_link "Newest First", request.GET().merge(:order => 'desc'), active_tabs.include?('desc') %>
+	<%= nav_link "Oldest First", request.GET().merge(:order => 'asc'), active_tabs.include?('asc') %>
+</div>

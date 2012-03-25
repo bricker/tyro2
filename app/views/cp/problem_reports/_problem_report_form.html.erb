@@ -1,0 +1,32 @@
+<%= form_for([:cp, record]) do |f| %>
+	<legend><%= form_title %></legend>
+	<%= check_for_errors(record) %>
+	<fieldset>
+		<ol>
+		  <li>
+			<label for="title">Title</label>
+			<%= f.text_field :title %>
+		  </li>
+	
+		  <li>
+		    <label for='category'>Category</label>
+		    <%= f.select :category, ProblemReport::Categories.map{|c| [c.humanize, c]} %>
+		  </li>
+		
+		  <% if controller.action_name == ('edit' || 'update') %> 
+		  	<li>
+				<label for='closed'>Closed?</label>
+				<%= f.check_box :closed %>
+			</li>
+		  <% end %>
+		
+		  <li>
+			<label for="description">Description</label>
+			<%= f.text_area :description, :size => "40x7" %>
+		  </li>
+		</ol>
+	</fieldset>
+	<fieldset>
+	  <%= f.submit submit %>
+	</fieldset>
+<% end %>

@@ -1,0 +1,32 @@
+<div id="schedule-today" class="widget">
+	<h3>Schedule</h3>
+	<% if record.empty? %>
+		<div class="content">
+			We're taking a quick breather...<br />
+			Check out our <%= link_to "Schedule", schedule_path %> to see when we'll be back live!
+		</div>
+	<% else %>
+		<% record.group_by { |e| e.starts_at.strftime('%A') }.each do |day, events| %>
+			<div class="day-header"><%= day %></div>
+			<% events.each do |event| %>
+				<div class="item event small linked last-link">
+					<div class="time small">
+						<% if current_events.include? event
+							event_type = ScheduleEvent.get_event_type(event.event_type) %>
+							<%= link_to "LIVE!", stream_path(:channel => event_type[:channel]), :class => 'stream-link', "data-channel" => event_type[:channel] %>
+						<% else %>
+							<%= pretty_date(event.starts_at, :only_time => true) %>
+						<% end %>
+					</div>
+					<div class="title">
+						<%= link_to event.title, polymorphic_url(event.schedulable) %>
+					</div>
+				</div> <!-- item -->
+			<% end #events.each %>
+		<% end #record.group_by %>
+	<% end #record.empty? %>
+	<div class="item small linked">
+		<%= link_to "Full Schedule &raquo;".html_safe, schedule_path, :class => 'right' %>
+		<div class="clear"></div>
+	</div>
+</div> <!-- schedule-today -->

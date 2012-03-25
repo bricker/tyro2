@@ -1,0 +1,8 @@
+<h2><%= @user.name %></h2>
+<div class="tabs">
+	<%= nav_link "View Profile", cp_user_path(@user), active_tabs.include?('view_profile') %>
+	<%= nav_link "Edit Profile", edit_cp_user_path(@user), active_tabs.include?('edit_profile') if @current_user.allowed_to('manage_user_info', 'manage_users_full')%>
+	<%= nav_link "Strikes", cp_user_strikes_path(@user), active_tabs.include?('strikes') if @current_user.allowed_to('manage_strikes') %>
+	<%= nav_link "Training", cp_user_training_progress_path(@user), active_tabs.include?('training')  if @user.roles.exists?(:title => 'noob') %>
+	<%= nav_link "Performance", cp_user_comments_path(@user), active_tabs.include?('performance') if (@current_user != @user and @current_user.allowed_to('train_users', 'manage_users_full', 'manage_strikes')) or @current_user.allowed_to('admin') %>
+</div>

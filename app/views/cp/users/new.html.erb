@@ -1,0 +1,25 @@
+<%= nav "manage_tabs", "add_users" %>
+<%= nav "add_users_nav", "single_user" %>
+
+<%= box_wrapper do %>
+	<%= form_for([:cp, @user]) do |f| %>
+	  <%= check_for_errors(@user) %>
+
+	  <fieldset>
+		<ol>
+		  <li>
+			<label for="name">Name</label>
+			<%= f.text_field :name %>
+		  </li>
+	
+		  <li>
+			<label for="email">Email</label>
+			<%= f.text_field :email %>
+		  </li>
+		</ol>
+	  </fieldset>
+	  <fieldset>
+	    <%= f.submit "Add User" %>
+	  </fieldset>
+	<% end %>
+<% end %>

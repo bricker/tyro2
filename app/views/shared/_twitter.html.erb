@@ -1,0 +1,33 @@
+<div id="twitter" class="widget">
+	<script src="http://widgets.twimg.com/j/2/widget.js"></script>
+	<script>
+	new TWTR.Widget({
+	  version: 2,
+	  type: 'profile',
+	  rpp: 1,
+	  interval: 30000,
+	  width: 180,
+	  height: 250,
+	  theme: {
+	    shell: {
+	      background: '#333333',
+	      color: '#edf6cf'
+	    },
+	    tweets: {
+	      background: '#000000',
+	      color: '#edf6cf',
+	      links: '#e85f29'
+	    }
+	  },
+	  features: {
+	    scrollbar: false,
+	    loop: false,
+	    live: false,
+	    hashtags: false,
+	    timestamp: false,
+	    avatars: false,
+	    behavior: 'all'
+	  }
+	}).render().setUser('birn').start();
+	</script>
+</div> <!-- twitter -->

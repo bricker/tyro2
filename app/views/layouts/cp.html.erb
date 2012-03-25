@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<%= stylesheet_link_tag 'cp' %>
+	<%= yield :stylesheets %>
+
+	<%= javascript_include_tag 'cp' %>
+   	<%= yield :javascript %>
+
+	  <%= csrf_meta_tag %>
+	  <link rel="icon" type="image/png" href="http://www.thebirn.com/favicon.jpg">
+
+	  <%= yield :header %>
+	  <title><%= content_for?(:title) ? yield(:title) : "Birn Control Panel" %></title>
+  </head>
+  <body>
+    <div id="content">
+		<div id='main-header'>
+	    	<h1><%= link_to 'Control Panel', cp_root_path %></h1>
+			<% if current_user %>
+		    	<div id="log">
+		        	<%= link_to display_avatar(@current_user, "tiny", :class => 'left'), cp_profile_path %> <strong><%= @current_user.dj_name %></strong><br />
+					<%= link_to 'Manage Profile', cp_profile_path, :class => 'edit-link' %> <%= link_to 'Logout', cp_logout_path, :class => 'edit-link', :method => :delete %> <%= link_to 'theBIRN.com', root_path, :class => 'edit-link' %>
+		      		<div class="clear"></div>
+			 	</div> <!-- end #log -->
+		  	<% end %>
+		  	<div class='clear'></div>
+		</div>
+		
+  	  	<div id="content-wrapper">
+	
+			<div id="nav-bar">
+				<% if current_user %>
+		
+					<%= link_to "Home", cp_root_path %>
+     				
+					<% if @current_user.shows.present? %>
+				        <h4>Shows</h4>				
+							<% @current_user.shows.each do |show| %>
+								<%= link_to "#{show.title}", cp_show_posts_path(show) %>
+							<% end %>
+					<% end %>
+
+					<% if @current_user.events.present? %>
+						<h4>Events</h4>
+							<% @current_user.events.each do |event| %>
+								<%= link_to "#{event.title}", cp_event_path(event) %>
+							<% end %>
+					<% end %>
+        
+					<h4>General</h4>
+     
+						<%= link_to "Forum", cp_forums_path %>
+						<%= link_to "Problem Reports", cp_problem_reports_path %>
+						<%= link_to "Shows", cp_shows_path %>
+						<%= link_to "Members", cp_users_path %>
+						<%= link_to "Training Progress", cp_training_steps_path %>
+						<%= link_to "Resources", cp_resources_path %>
+						<%= link_to "TIN News", cp_tin_news_path %>				
+
+
+					<% unless @current_user.permissions.empty? or (@current_user.permissions.length == 1 and @current_user.permissions.exists?(:title => 'post_reviews')) %>
+						<h4>Manage</h4>
+							<%= link_to "Signups", cp_signups_path if @current_user.allowed_to('manage_users_full') %>
+							<%= link_to "Static Content", cp_static_contents_path if @current_user.allowed_to('edit_static_content') %>
+							<%= link_to "News Posts", cp_news_posts_path if @current_user.allowed_to('manage_news_posts') %>
+				            <%= link_to "Events", cp_events_path if @current_user.allowed_to('manage_schedule') %>
+					<% end %>
+				<% end #current_user %>
+			</div> <!-- end #nav-bar -->
+
+    <div id="main-box">
+	<% unless flash.empty? %>
+		<div id="flash_messages">
+    		<% flash.each do |name, msg| %>
+				<div class="<%= name %>"><%= msg %></div>
+			<% end %>
+		</div>
+	<% end %>
+	
+	
+	<%= yield %>
+
+	
+      </div> <!-- end #main-box -->
+  <div class="spacer"></div>
+  </div> <!-- end #content-wrapper -->
+  </div> <!-- end #content -->
+  <div id="footer">
+      <span style="float: left;">Tyro Created by <a href="http://www.thebirn.com/">The BIRN &copy; <%= Time.zone.now.year %></a></span>
+  </div> <!-- end #footer -->
+  </body>
+</html>

@@ -1,0 +1,56 @@
+<div id='home-box'>
+	<div id='left'>
+		<div id='notifications' class='widget'>
+			<h3>Notifications</h3>
+			<div class='content'>
+				<% if @unread_topics.present? %>
+					<div class="item linked">
+						<%= link_to "You have #{pluralize(@unread_topics.count, "Unread Topic")}", unread_cp_topics_path %>.
+					</div>
+				<% else %>
+					<div class="item">
+						No notifications.
+					</div>
+				<% end %>
+			</div>
+		</div> <!-- notifications -->
+		
+		<div id='new-posts' class='widget'>
+			<h3>Latest Forum Activity</h3>
+			<div class='content'>
+				<% @latest_topics.each do |topic| %>
+					<div class='item linked'>
+						<%= link_to topic.title, cp_topic_messages_path(topic) %><br /><br />
+						last reply <%= distance_of_time_in_words(Time.zone.now, topic.updated_at) %> ago<br />
+						<% latest_user =  topic.most_recent_reply.user %>
+						by <%= link_to latest_user.name, cp_user_path(latest_user), :class => 'name' %>
+						<div class="clear"> </div>
+					</div>
+				<% end %>
+				<div class="item linked">
+					<%= link_to("Go to Forums &raquo;".html_safe, cp_forums_path, :class => 'edit-link right') %>
+					<div class="clear"></div>
+				</div>
+				<%= no_records_check 'Topics', @latest_topics %>
+			</div>
+		</div> <!-- new-posts -->
+	</div> <!-- left -->
+
+	<div id='right'>
+		<% @announcements.each do |announcement| %>
+			<div class='post'>
+				<h2><%= announcement.title %></h2>
+				<div class='info'>
+					posted <%= distance_of_time_in_words(Time.zone.now, announcement.created_at) %> ago by <%= link_to announcement.user.name, cp_user_path(announcement.user) %>. 
+					<%= link_to "#{announcement.replies} replies", cp_topic_messages_path(announcement), :class => 'edit-link' %> <%= link_to 'edit', edit_cp_topic_path(announcement), :class => 'edit-link' if @current_user.allowed_to('manage_forums') or announcement.user == @current_user %>
+				</div>
+				<div class='content'>
+					<%= link_to display_avatar(announcement.user, 'tiny', :class => 'left'), cp_user_path(announcement.user) %>
+					<%= display_message announcement.body %>
+					<div class="clear"></div>
+				</div>
+			</div>
+		<% end %>
+		<%= no_records_check @announcements, "Announcements" %>
+	</div><!-- right -->
+</div><!-- home-box -->

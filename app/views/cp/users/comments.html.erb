@@ -1,0 +1,5 @@
+<%= nav 'profile_tabs', 'performance' %>
+
+<%= box_wrapper do %>
+	<%= render :partial => '/cp/comments/comments', :locals => { :record => @user } %>
+<% end %>

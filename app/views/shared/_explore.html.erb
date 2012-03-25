@@ -1,0 +1,9 @@
+<div id="explore" class="widget">
+	<h3>Explore</h3>
+	<div class="content">
+		<form action="<%= explore_path %>" method="get">
+			<%= text_field_tag 'query', nil, :placeholder => "Looking for something?" %>
+			<%= submit_tag "Go", :name => nil %>
+		</form>
+	</div>
+</div>

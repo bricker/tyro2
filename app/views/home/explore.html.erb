@@ -1,0 +1,89 @@
+<div id="explore" class="two-cols">
+	<h2 class="with-gradient">Explore</h2>
+	<div class="sub-nav">
+		<% @search_types.each do |search_type| %>
+			<%= link_to search_type[:title], explore_path(request.GET().merge!(:search_type => search_type[:param])), :class => @results[:param] == search_type[:param] ? 'active' : nil %>
+		<% end %>
+	</div>
+	<p>
+	<form action="<%= explore_path %>" method="get">
+		<strong>What are you looking for?</strong> &nbsp;&nbsp;<%= text_field_tag 'query', params[:query] %>
+		<%= submit_tag "Go", :name => nil %>
+	</form>
+	</p>
+	
+	<% if @results[:response].present? %>
+		<% if @results[:param] == "shows" %>
+			<% @results[:response].each do |show| %>
+				<div class="content-box show">
+					<h3><%= link_to show.title, show %></h2>
+					<div class="avatar">
+						<%= link_to display_avatar(show, 'medium'), show.avatar.url(:original), :class => 'lightbox', :title => show.title %>
+					</div>
+					<div class='info'>
+						<% if @current_events.any?{|e| e.schedulable == show} %>
+							<%= link_to "Live on BIRN1!", stream_path(:channel => 'birn1'), :class => 'stream-link', "data-channel" => 'birn1' %>
+						<% elsif show.next.present? %>
+							<%= show.next.starts_at.strftime("%As at %l%p EST")%>
+						<% else %>
+							This show is not scheduled.
+						<% end %>
+					</div> <!-- .info -->
+
+					<div class='info genre'>
+						<%= show.genre.present? ? show.genre : "Music" %>
+					</div>
+					<div class="description">
+						<%= show.description.present? ? show.description : "#{show.users.map(&:dj_name).to_sentence} Broadcasting from the BIRN Studios at Berklee!"%>
+					</div>
+					<div class="clear"></div>
+				</div> <!-- show -->
+			<% end %>
+			
+		<% elsif @results[:param] == "playlist" %>
+			<div class="playlist">
+				<% @results[:response].group_by{|e| e.created_at.strftime("%B %Y")}.each do |date, entries| %>
+					<h3><%= date %></h3>
+						<%= render :partial => 'shared/playlist_entry', :collection => entries, :locals => { :with_show => true } %>
+				<% end %>
+			</div>
+			
+		<% elsif @results[:param] == "events" %>
+			<% @results[:response].each do |event| %>
+				<%= render :partial => 'events/event_info', :locals => { :event => event, :hide_facebook => true } %>
+			<% end %>
+		
+		<% else %>
+			<% @results[:response].each do |result| %>
+				<p>
+					<% result.attributes.each do |key, value| %> 
+						<strong><%=key%></strong>: <%=value%><br />
+					<% end %>
+				</p>
+			<% end %>
+		<% end # type check %>
+	<div class="right<%= ' hidden' if @results[:response].num_pages < 2 %>">More: <%= paginate @results[:response] %></div>
+	
+	<% else # no results %>
+		Your search didn't return anything! You can try to:
+		<ul>
+			<% if params[:search_type].present? %>
+				<li>Check different areas: 
+					<ul>
+						<% @search_types.reject{|t| t[:param] == params[:search_type]}.each do |search_type| %>
+							<li><%= link_to search_type[:title], explore_path(request.GET().merge!(:search_type => search_type[:param])) %></li>
+						<% end %>
+					</ul>
+				</li>
+			<% end %>
+			<li>Refine your search: Make it more generic or remove common words ("the", "or", "and", etc.)</li>
+			<li>Search for something else you're interested in!</li>
+		</ul>
+	<% end %>
+</div>
+
+<div id="right">
+	<%= render :partial => 'shared/todays_events', :locals => { :record => @todays_events, :current_events => @current_events } %>
+	<%= render :partial => 'shared/featured_dj', :locals => { :record => @featured_dj }%>
+	<%= render :partial => 'shared/contact', :locals => { :contact => @contact } %>
+</div> <!-- right -->

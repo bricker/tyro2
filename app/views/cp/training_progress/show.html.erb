@@ -1,0 +1,4 @@
+<%= nav '/cp/users/nav_partials/profile_tabs', 'training' %>
+<%= nav 'manage_nav', 'view_progress' %>
+
+<%= render :partial => 'training_steps', :locals => { :user => @user, :training_steps => @training_steps } %>

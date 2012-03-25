@@ -1,0 +1,11 @@
+<%= forum_header(:title => "Unread Topics") do %>
+	<%= add_button('Mark All Read', mark_read_cp_topics_path) if @unread_topics.present? %>
+<% end %>
+
+<%= paginate @topics %>
+	<div id='forum-list'>
+		<%= render :partial => 'topic', :collection => @topics, :locals => { :unread_topics => @unread_topics } %>
+		<%= no_records_check(@topics, "Unread Topics", :message => "You are all caught up!") %>
+	</div>
+<%= paginate @topics %>
+<%= render :partial => 'legend' %>

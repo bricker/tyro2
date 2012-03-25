@@ -1,0 +1,41 @@
+	<div id="left">
+		<%= render :partial => 'shared/blogs', :locals => { :records => @blogs }%>
+		<%= render :partial => 'shared/twitter' %>
+		<%= render :partial => 'shared/mbj', :locals => { :records => @mbj_items } %>
+		<%= render :partial => 'shared/links', :locals => { :links => @links } %>
+	</div> <!-- left -->
+	
+	<div class="middle">
+		<div id="current-events">
+			<% unless @current_events.blank? %>
+				<%= render :partial => 'current_event', :collection => @current_events %>
+			<% else %>
+				<%= render "no_events" %>
+			<% end %>
+			<div class="clear"></div>
+		</div>
+		
+		<div id="next-event">
+			<% if @next_event.present? %>
+				<%= render :partial => 'next_event', :object => @next_event %>
+			<% end %>
+		</div>
+		
+		<div id="news-items">
+			<h2 class="with-gradient">News</h2>
+			<% if @news_posts.present? %>
+				<%= render :partial => 'shared/news', :locals => { :records => @news_posts } %>
+				<div class="sub-nav below right">
+					<%= link_to "More News &raquo;".html_safe, news_path %>
+				</div>
+			<% end %>
+		</div>
+
+	</div> <!-- middle -->
+	
+	<div id="right">
+		<%= render :partial => 'shared/explore', :locals => { :tags => @tags } %>
+		<%= render :partial => 'shared/todays_events', :locals => { :record => @todays_events, :current_events => @current_events } %>
+		<%= render :partial => 'shared/featured_dj', :locals => { :record => @featured_dj } %>
+		<%= render :partial => 'shared/contact', :locals => { :contact => @contact } %>
+	</div> <!-- right -->

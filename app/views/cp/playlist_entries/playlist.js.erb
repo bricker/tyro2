@@ -1,0 +1,110 @@
+var form_counter = 1;
+
+<% cache 'playlist_entries', :expires_in => '1.day' do %>
+	var titles = <%=raw @all_playlist_entries.map(&:title).uniq.to_json %>
+	var artists = <%=raw @all_playlist_entries.map(&:artist).uniq.to_json %>
+	var albums = <%=raw @all_playlist_entries.map(&:album).uniq.to_json %>
+	var autocomplete_options = { delay: 100, autoFocus: true, minLength: 3 };
+<% end %>
+	
+function addSongFields() {
+	playlistEntry = $('#playlist-entry');
+	playlistEntry.append("<%= escape_javascript(render :partial => 'playlist_entry_form', :locals => { :schedule_event => @schedule_event, :playlist_entry => PlaylistEntry.new}) %>");
+	playlistEntry.find('form:last').attr('id', form_counter); // OPTIMIZE This line and the next line do the same. Why do I have both?
+	playlistEntry.find('.new_song_form:last').attr('id', 'new_song_form_'+form_counter);
+	playlistEntry.find('.form_num:last').val('new_song_form_'+form_counter);
+	playlistEntry.find('.playlist_entry_title').autocomplete($.extend({source: titles}, autocomplete_options));
+	playlistEntry.find('.playlist_entry_artist').autocomplete($.extend({source: artists}, autocomplete_options));
+	playlistEntry.find('.playlist_entry_album').autocomplete($.extend({source: albums}, autocomplete_options));
+}
+
+function renderItunes(content){
+	var songs = $.trim(content).split('\n');
+	$.each(songs, function(index, song) {
+		var details = song.split('\t');
+		addSongFields(form_counter); // Why do I have an argument here?!?!
+		$('.new_song_form:last #playlist_entry_title').val(details[0]);
+		$('.new_song_form:last #playlist_entry_artist').val(details[1]);
+		$('.new_song_form:last #playlist_entry_album').val(details[2]);
+		doIcons($('.new_song_form:last input'))
+		form_counter++; // OPTIMIZE I should form_counter++ in the addSongFields function.	
+	});
+};
+
+function allFilled(form_id){ // Checks if the proper fields are filled in the playlist entry when submitting a song.
+	var filled = true;
+	
+	var inputs = [$("#"+form_id+" #playlist_entry_title"), $("#"+form_id+" #playlist_entry_artist")];
+  $.each(inputs, function(){
+		if($.trim($(this).val()) == '') filled = false;
+  });
+
+	return filled;
+};
+
+function doIcons(field){
+ 		if(field.val != '') field.removeClass('error');
+		var current_form_id = field.closest('div').attr('id'); 
+		if(allFilled(current_form_id)) {
+			$("#"+current_form_id+" #playlist_entry_submit").attr('class', 'valid');
+		} else {
+			button_class = $("#"+current_form_id+" #playlist_entry_submit").attr('class');
+			if((button_class == 'disabled') || (button_class == 'valid')) $("#"+current_form_id+" #playlist_entry_submit").attr('class', 'disabled');
+			if(button_class == 'invalid') return true;
+			if(button_class == 'loading') return true;
+		}
+};
+
+$(document).ready(function() {	
+	while(form_counter <= 5) { // render song_field partial 5 times on page load.
+		addSongFields();
+		form_counter++;
+	}
+
+	$('#itunes-link').click(function(event) {
+		event.preventDefault();
+		$('#itunes-box').toggle();
+	});
+	
+	$('#add-song-link').click(function(element) {
+		element.preventDefault();
+		addSongFields(form_counter); // OPTIMIZE Why am I passing an argument here? The function doesn't take any arguments.
+		form_counter++;
+	});
+	
+	$('#itunes-box').submit(function(event) {
+		event.preventDefault();
+		$('#playlist-entry .new_song_form').each(function() {
+			if($(this).find('#playlist_entry_title').val() == '' && $(this).find('#playlist_entry_artist').val() == '' && $(this).find('#playlist_entry_album').val() == '') {
+				$(this).remove();
+			}
+		});
+		renderItunes($('#itunes-content').val(), form_counter);
+		$("#itunes-content").val('');
+	});
+	
+	$('.manage-song-link').live('click', function(event){
+		var buttonsDiv = $(this).closest('.manage-buttons')
+		buttonsDiv.empty();
+		buttonsDiv.spin(smallSpinner);
+	});
+		
+	/************ PLAYLIST valid/invalid/loading/error icons *************/
+	
+	$('.new_song_form input').live('keyup', function(event) { // this code is ugly
+		if(event.keyCode != '13' && event.keyCode != '9' && event.keyCode != '16') { // enter, backspace, and tab should not change anything
+			doIcons($(this));
+		}
+	});
+	
+	$('.new_song_form form').live('submit', function(event) { // Handles the loading icon on playlist page
+		var submitButton = $(this).find('#playlist_entry_submit');
+		$(this).find('.submit-button').spin(smallSpinner);
+		if(submitButton.hasClass('submitted')) {
+			event.preventDefault();
+			return false;
+		} else {
+			submitButton.addClass('submitted');
+		}
+	});
+});

@@ -1,0 +1,14 @@
+currentEvents = $("#current-events");
+<% unless @current_events.blank? %>
+	currentEvents.html("<%= escape_javascript(render :partial => 'current_event', :collection => @current_events) %>");
+<% else %>
+	currentEvents.html("<%= escape_javascript(render 'no_events') %>");
+<% end %>
+currentEvents.append("<div class=\"clear\"></div>");
+
+FB.init({
+  appId  : '138917966205509',
+  status : true, // check login status
+  cookie : true, // enable cookies to allow the server to access the session
+  xfbml  : true, // parse XFBML
+});

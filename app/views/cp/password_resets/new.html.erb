@@ -1,0 +1,17 @@
+<%= box_wrapper nil, :no_tabs => true do %>
+	<%= form_tag cp_password_resets_path, :method => :post do %>
+		<fieldset>
+			<legend>Reset Password</legend>
+			<ol>
+			  <li>
+				<label for="email">Email</label>
+				<%= text_field_tag 'email', params[:email] %>
+			  </li>
+			</ol>
+		</fieldset>
+
+		<fieldset>
+		  <%= submit_tag "Reset Password" %>
+		</fieldset>
+	<% end %>
+<% end %>

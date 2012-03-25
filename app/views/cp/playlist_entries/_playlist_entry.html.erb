@@ -1,0 +1,31 @@
+<div class="playlist_entry">
+	<div class="field">
+		<div class="info">
+			<%= playlist_entry.title %>
+		</div>
+		<div class="meta">by</div>
+	</div>
+
+	<div class="field">
+		<div class="info">
+			<%= playlist_entry.artist %>
+		</div>
+		<% unless playlist_entry.album.blank? %><div class="meta">from</div><% end %>
+	</div>
+
+	<div class="field">
+		<div class="info">
+			<%= playlist_entry.album %>
+		</div>
+	</div>
+
+	<div class="time">
+		<%= pretty_date(playlist_entry.created_at, :only_time => true) %>
+	</div>
+
+	<div class="manage-buttons">
+		<%= link_to image_tag('icons/edit.png'), edit_cp_schedule_event_playlist_entry_path(schedule_event, playlist_entry), :remote => true, :id => playlist_entry.id, :class => 'manage-song-link' %>
+		<%= link_to image_tag('icons/Knob Cancel.png'), cp_schedule_event_playlist_entry_path(schedule_event, playlist_entry), :method => :delete, :remote => true, :class => 'manage-song-link', :confirm => "Remove this playlist entry?" %>
+	</div>
+	<div class="clear"></div>
+</div>

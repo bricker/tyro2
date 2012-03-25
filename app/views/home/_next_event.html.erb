@@ -1,0 +1,4 @@
+<% event_type = ScheduleEvent.get_event_type(next_event.event_type) %>
+<h2 class="with-gradient">Coming Soon on <%= link_to event_type[:title], stream_path(:channel => event_type[:channel]), :class => "listen-link", "data-channel" => event_type[:channel] %></h2>
+<%= render :partial => 'events/event_info', :locals => { :event => next_event } %>
+<div class="clear"></div>

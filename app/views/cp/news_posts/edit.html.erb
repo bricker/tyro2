@@ -1,0 +1,4 @@
+<%= box_wrapper "News Posts", :no_tabs => true do %>
+	<%= render :partial => 'news_post_form', :locals => { :record => @news_post, :form_title => "Edit News Post", :submit => "Update" }%>
+	<%= link_to "Delete News Post", cp_news_post_path(@news_post), :method => :delete, :confirm => "Delete this news post?" %>
+<% end %>

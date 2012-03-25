@@ -1,0 +1,20 @@
+<%= nav '/cp/users/nav_partials/profile_tabs', 'strikes' %>
+<%= nav 'list_filters', params[:list] || 'unresolved' %>
+
+<%= box_wrapper do %>
+	<h3><%=@user.name%> has <%=@user.total_strikes%> unresolved strikes</h3>
+	<%= add_button 'Add Strike', new_cp_user_strike_path(@user) if @current_user.allowed_to('manage_strikes') %>
+	<div class="list strikes">
+		<% @strikes.each do |strike| %>
+			<div class="row">
+				<div class="name"><%= strike.reason %> on <%= pretty_date(strike.offense_on, :short => true) %></div>
+				<div class="status"><%= pluralize(strike.severity, "strike") %></div>
+				<div class="links">
+					<%= link_to "Edit", edit_cp_user_strike_path(@user, strike) if @current_user.allowed_to('manage_strikes') %>
+					<%= link_to(strike.resolved ? "Mark Unresolved" : "Mark Resolved", toggle_resolved_cp_user_strike_path(@user, strike), :method => :post) if @current_user.allowed_to('manage_strikes') %>
+				</div>
+			</div>
+		<% end %>
+		<%= no_records_check @strikes, "Strikes" %>
+	</div>
+<% end %>

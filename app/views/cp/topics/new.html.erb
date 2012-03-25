@@ -1,0 +1,23 @@
+<%= forum_header(:forum => @forum) {} %>
+
+<%= box_wrapper nil, :no_tabs => true do %>
+	<%= form_for [:cp, @forum, @topic] do |f| %>
+		<legend>Start Topic</legend>
+	  	<%= check_for_errors(@topic) %>
+	
+		<fieldset>
+			<ol>
+				<%= render :partial => 'topic_form', :object => f, :locals => { :topic => @topic, :forum => @forum } %>
+				<%= f.fields_for :initial_message do |m| %> 
+					<%= reply_box do %>
+						<%= render :partial => '/cp/messages/message_form', :object => m, :locals => { :topic => @topic, :forum => @forum } %>
+					<% end %>
+				<% end %>
+			</ol>
+		</fieldset>
+		
+	  	<fieldset>
+	    	<%= f.submit "Start Topic" %>
+	  	</fieldset>
+	<% end %>
+<% end %>

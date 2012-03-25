@@ -1,0 +1,5 @@
+$('#schedule').fullCalendar('removeEvents', "<%= @event.id %>");
+$('#event-dialog').dialog('destroy');
+$('#event-success').html('Removed Event.').fadeIn('1000').delay('5000').fadeOut('1000');
+
+// FIXME Figure out why there are two spinners when "Remove Event" is clicked.

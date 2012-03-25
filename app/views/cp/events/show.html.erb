@@ -1,0 +1,31 @@
+<%= nav 'event_tabs', 'details' %>
+<%= box_wrapper do %>
+	<div class="list-item one-col">
+		<div class="label">Title</div>
+		<div class="info"><%= @event.title %></div>
+	</div>
+	
+	<div class="list-item one-col">
+		<div class="label">Event Type</div>
+		<div class="info"><%= ScheduleEvent.get_event_type(@event.event_type)[:title] %></div>
+	</div>
+	
+	<div class="list-item one-col">
+		<div class="label">Date/Time</div>
+		<div class="info"><strong><%= pretty_date(@event.starts_at, :time => true) %></strong> to <strong><%= pretty_date(@event.ends_at, :time => true) %></strong></div>
+	</div>
+	
+	<div class="list-item one-col">
+		<div class="label">Tags</div>
+		<div class="info"><%= @event.tags.map(&:name).join(", ") %></div>
+	</div>
+	
+	<% if @event.users.present? %>
+		<div class="list-item one-col">
+			<div class="label">DJs</div>
+			<div class="info"><%= @event.users.map{ |u| u.name }.join(', ') %></div>
+		</div>
+	<% end %>
+	
+	<div class="content"><%= display_message(@event.description) %></div>
+<% end %>

@@ -1,0 +1,11 @@
+var thisEntry = $('#playlist_entry_<%=@playlist_entry.id%>')
+thisEntry.html("<%= escape_javascript(render :partial => 'playlist_entry_form', :locals => { :schedule_event => @schedule_event, :playlist_entry => @playlist_entry}) %>")
+thisEntry.find('form').attr('id', form_counter).addClass('editing');
+thisEntry.find('.new_song_form').attr('id', 'new_song_form_'+form_counter);
+thisEntry.find('.form_num').val('new_song_form_'+form_counter);
+thisEntry.find('#playlist_entry_submit').removeClass('disabled').addClass('valid');
+
+form_counter++;
+
+// OPTIMIZE This could be DRYed up, possibly by using addSongFields. 
+// Also, do we really need to set all these ID's? Probably just one would do.

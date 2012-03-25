@@ -1,0 +1,17 @@
+<%= forum_header(:forum => @message.forum, :topic => @message.topic) {} %>
+
+<%= box_wrapper nil, :no_tabs => true do %>
+	<%= form_for [:cp, @message] do |f| %>
+		<legend>Edit Reply</legend>
+		<%= check_for_errors @message %>
+		
+		<%= reply_box do %>
+			<%= render :partial => 'message_form', :object => f %>
+		<% end %>
+		
+		<fieldset>
+			<%= f.submit "Update Reply" %>
+		</fieldset>
+	<% end %>
+	<%= link_to "Remove Reply", cp_message_path(@message), :method => 'delete', :confirm => "Remove this reply?", :class => 'delete-link' %>
+<% end %>

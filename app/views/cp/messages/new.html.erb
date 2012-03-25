@@ -1,0 +1,16 @@
+<%= forum_header(:forum => @topic.forum, :topic => @topic) {} %>
+
+<%= box_wrapper nil, :no_tabs => true do %>
+	<%= form_for [:cp, @topic, @message] do |f| %>
+		<legend>Add Reply</legend>
+		<%= check_for_errors @message %>
+		
+		<%= reply_box do %>
+			<%= render :partial => 'message_form', :object => f %>
+		<% end %>
+		
+		<fieldset>
+			<%= f.submit "Add Reply" %>
+		</fieldset>
+	<% end %>
+<% end %>

@@ -1,0 +1,6 @@
+<% records.each do |post| %>
+	<h3><%= post.title %></h3>
+	<div class="content-box news description">
+		<%= post.body.html_safe %>
+	</div>
+<% end %>

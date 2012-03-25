@@ -1,0 +1,3 @@
+<%= box_wrapper "News Posts", :no_tabs => true do %>
+	<%= render :partial => 'news_post_form', :locals => { :record => @news_post, :form_title => "New Show Post", :submit => "Add" }%>
+<% end %>

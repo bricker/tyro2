@@ -1,0 +1,16 @@
+<div class="show-box <%= cycle('left', 'right') %>">
+	<div class="left">
+		<%= link_to display_avatar(show, "tiny"), cp_show_path(show) %>
+	</div>
+	<div class="info">
+		<h3><%= link_to show.title, cp_show_path(show) %></h3>
+		<div class="meta">
+			<strong>Genre:</strong> <%= show.genre %><br />
+			<strong>DJs:</strong> <%= show.users.empty? ? "none" : show.users.map { |user| user.name }.join(", ") %>
+		</div>
+		<div class="manage">
+			<%= link_to 'manage', edit_cp_show_path(show) if @current_user.allowed_to('manage_shows') %><% if show.active? %> - <%= link_to 'view in frontend', show_path(show) %><% end %>
+		</div>
+	</div> <!-- end .item-info -->
+	<div class="clear"></div>
+</div> <!-- end .item-box -->

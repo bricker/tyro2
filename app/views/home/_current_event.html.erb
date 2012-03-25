@@ -1,0 +1,39 @@
+<div class="current-event" id="<%= current_event.id %>">
+	<% event_type = ScheduleEvent.get_event_type(current_event.event_type) 
+	   event = current_event.schedulable %>
+	<h2 class="with-gradient"><%= link_to "Live on #{event_type[:title]}!", stream_path(:channel => event_type[:channel]), :class => "listen-link", "data-channel" => event_type[:channel] %></h2>
+
+	<% if event.class.to_s == 'Show' %>
+		<div class="content-box show">
+			<h3><%= link_to event.title, event %>
+				<%= livecam_icon %></h3>
+
+			<div class="description">
+				<%= link_to display_avatar(event, 'medium'), event %>
+				<span class="info"><%= current_event.starts_at.strftime("%l%p") + " - " + current_event.ends_at.strftime("%l%p") %> EST</span>
+				<%= event.description.present? ? event.description : "#{event.users.map(&:dj_name).to_sentence} Broadcasting from the BIRN Studios at Berklee!"%>
+				<div class="facebook-like-big">
+					<fb:like href="http://thebirn.com<%= url_for event %>" ref="<%= truncate(event.to_param) %>" send="false" layout="standard" show_faces="true" width="411px" colorscheme="dark" font="lucida grande"></fb:like>
+				</div>
+			</div> <!-- description -->
+		</div> <!-- content-box -->
+		
+	<% elsif event.class.to_s == 'Event' %>
+		<%= render :partial => 'events/event_info', :locals => { :event => event } %>
+	<% end # class check %>
+	
+	<% if current_event.playlist_entries.present? %>
+		<h3>Playlist</h3>
+		<div class="playlist refresh" data-current-event-id="<%= current_event.id %>">
+			<div class="entries">
+				<%= render :partial => 'shared/playlist_entry', :collection => current_event.playlist_entries.order("created_at desc").limit(5) #TODO fix this
+				 %>
+			</div>
+			<div class="small right">
+				<%= link_to "View full playlist &raquo;".html_safe, playlist_path %>
+			</div>&nbsp;
+			<div class="clear"></div>
+		</div> <!-- playlist -->
+	<% end # event check %>
+</div><!-- #current-event -->
+

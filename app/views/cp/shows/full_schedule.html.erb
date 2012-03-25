@@ -1,0 +1,23 @@
+<%= nav 'manage_tabs', 'schedule' %>
+<%= box_wrapper do %>
+	<%= render :partial => 'cp/schedule_events/calendar', :locals => { :schedulable_type => "Show", :schedulable_id => '' } %>
+	<br />
+	<%= form_tag recur_cp_schedule_events_path, :id => 'recur-form' do %>
+		<legend>Set Weekly Recurrence</legend>
+		<fieldset>
+			<ol>
+				Any show event which starts on or after
+					<li>
+						<%= text_field_tag 'recur_select_start', nil, :class => 'datepicker short', :placeholder => 'choose date' %>
+					</li>
+				should recur, weekly, through
+					<li>
+						<%= text_field_tag 'recur_through', nil, :class => 'datepicker short', :placeholder => 'choose date' %>
+					</li>.
+					<div class="loading-submit"></div>
+					<%= submit_tag "Do it" %>
+			</ol>
+		</fieldset>
+	<% end %>
+	<span class="note right">Note: This could take a minute.</span>
+<% end %>

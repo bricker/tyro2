@@ -1,0 +1,10 @@
+<div id="featured-dj" class="widget">
+	<h3>Featured DJ</h3>
+	<div class="content">
+		<% if record %>
+			<%= render :partial => 'shared/dj_profile', :locals => { :record => record } %>
+		<% else %>
+			There is currently no Featured DJ.
+		<% end %>
+	</div>
+</div>

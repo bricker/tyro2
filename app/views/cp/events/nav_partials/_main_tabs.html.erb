@@ -1,0 +1,10 @@
+<h2>Events</h2>
+
+<div class="tabs">
+	<% ScheduleEvent::Types.each do |type| %>
+		<%= nav_link type[:title], cp_events_path(request.GET().merge(:list => type[:channel])), active_tabs.include?(type[:channel]) %>
+	<% end %>
+	
+	<span class="nav-spacer"></span>
+	<%= nav_link "Add Event", new_cp_event_path, active_tabs.include?('add_event') %>
+</div>

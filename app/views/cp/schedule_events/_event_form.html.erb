@@ -1,0 +1,36 @@
+<%= form_for [:cp, schedule_event], :remote => true do |f| %>
+	<fieldset>
+		<legend><%= title %><%= " for #{schedulable.title}" if schedulable.present? %></legend>
+		<ol>
+			<%= render :partial => '/cp/schedule_events/date_fields', :locals => { :s => f, :record => schedule_event } %>
+			
+			<li>
+				<label>Recur Through</label>
+				<%= f.text_field :recur_through, :value => schedule_event.recurring ? pretty_date(schedule_event.sibling_recurrences.last.starts_at, :short => true) : nil, :placeholder => 'choose date', :class => 'datepicker short' %> <span class="note right">Leave Blank for no recurrence.</span>
+				<%# FIXME The above line is broken if all of an event's sibling_recurrences are deleted, with an error like no method "starts_at" for nil. Needs to be fixed. %>
+			</li>
+			
+			<% if schedule_event.new_record? %>
+				<%= f.hidden_field :schedulable_type, :value => schedulable_type %>
+				<% if schedulable.present? %>
+					<%= f.hidden_field :schedulable_id, :value => schedulable.id %>
+					<%= f.hidden_field :event_type, :value => "Birn1" %> 
+				<% elsif schedulable_type == "Show" %>
+					<li>
+						<label>Event For</label>
+						<%= f.text_field :show_token, :class => 'show_token' %>
+					</li>
+					<%= f.hidden_field :event_type, :value => "Birn1" %> <%# FIXME this line should also be above for the individual show schedule pages, otherwise event_type is left blank%>
+				<% end %>
+			<% end %>
+		</ol>
+	</fieldset>
+	
+	<fieldset>
+		<div class="alert left"></div>
+		<div class="loading-submit right"></div>
+		<%= f.submit 'Save' %>
+	</fieldset>
+	
+	<%= link_to("Remove Event", cp_schedule_event_path(schedule_event), :method => :delete, :confirm => "Remove this event?", :remote => true) if !schedule_event.new_record? %>
+<% end %>

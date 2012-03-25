@@ -1,0 +1,47 @@
+<%= content_for :stylesheets do %>
+	<%= stylesheet_link_tag "ui-darkness/jquery-ui-darkness", 'fullcalendar.css' %>
+<% end %>
+
+<%= content_for :javascript do %>
+	<%= javascript_include_tag 'fullcalendar.js' %>
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+			var date = new Date();
+			var d = date.getDate();
+			var m = date.getMonth();
+			var y = date.getFullYear();
+
+			var schedule = $('#schedule').fullCalendar({
+				editable: false,  
+				selectable: false,
+				selectHelper: false,
+				theme: true,
+				slotMinutes: 30,
+			  	allDaySlot: false,
+				defaultView: 'agendaWeek',
+				aspectRatio: 0,
+				lazyFetching: true,
+
+		        eventSources: [
+				{	url: "<%= sources_path(:source => 'Birn1') %>",
+					color: "#1E6701" },
+				{	url: "<%= sources_path(:source => 'BirnPresents') %>",
+					color: "#D90000" },
+				{	url: "<%= sources_path(:source => 'Birn2') %>",
+					color: "#04576F" },
+				{	url: "<%= sources_path(:source => 'shows') %>",
+					color: "#2E0927" } ],
+						
+				eventClick: function(event, jsEvent, view){
+					true
+				}
+			});
+		});
+	</script>
+<% end %>
+
+<div class="one-col">
+	<div id="loading"></div>
+	<div id="schedule"></div>
+</div> <!-- middle -->

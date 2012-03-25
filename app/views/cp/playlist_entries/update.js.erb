@@ -1,0 +1,14 @@
+$("#<%= params[:form_num] %> #playlist_entry_submit").removeClass('submitted');
+
+<% if @playlist_entry.errors.any? %>
+	$("#<%= params[:form_num] %> #playlist_entry_submit").attr('class', 'invalid');
+ 	
+	<% @playlist_entry.errors.each do |attr, msg| %>
+		$("#<%= params[:form_num] %> #playlist_entry_<%= attr.to_s %>").addClass('error');
+ 	<% end %>
+
+<% else %>
+	$("#playlist-entry form input[type=text]:first").focus();
+	$("#playlist_entry_<%=@playlist_entry.id%>").html("<%= escape_javascript(render :partial => '/cp/playlist_entries/playlist_entry', :object => @playlist_entry, :locals => { :schedule_event => @schedule_event }) %>");
+	$("#playlist_entry_<%= @playlist_entry.id %> .playlist_entry").effect("highlight", {color:"#A6F766"}, 3000);
+<% end %>

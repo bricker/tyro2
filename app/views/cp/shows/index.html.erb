@@ -1,0 +1,8 @@
+<%= nav 'manage_tabs', 'list_shows' %>
+<%= nav 'listing_nav', params[:list] || 'active' %>
+
+<%= box_wrapper do %>
+	<%= add_button "Add Show", new_cp_show_path %>
+	<%= render :partial => 'show_box', :collection => @shows, :as => :show %>
+	<%= no_records_check @shows, "Shows" %>
+<% end %>

@@ -1,0 +1,22 @@
+<div id="left">
+	<%= render :partial => 'shared/blogs', :locals => { :records => @blogs }%>
+	<%= render :partial => 'shared/twitter' %>
+	<%= render :partial => 'shared/mbj', :locals => { :records => @mbj_items } %>
+	<%= render :partial => 'shared/links', :locals => { :links => @links } %>
+</div> <!-- left -->
+
+<div id="news" class="middle">
+	<h2 class="with-gradient">BIRN News</h2>
+	<% if @news_posts.present? %>
+		<%= render :partial => 'shared/news', :locals => { :records => @news_posts } %>
+		<%= paginate @news_posts %>
+	<% end %>
+	<%= no_records_check(@news_posts, "News Posts") %>
+</div> <!-- middle -->
+
+<div id="right">
+	<%= render :partial => 'shared/explore', :locals => { :tags => @tags } %>
+	<%= render :partial => 'shared/todays_events', :locals => { :record => @todays_events, :current_events => @current_events } %>
+	<%= render :partial => 'shared/featured_dj', :locals => { :record => @featured_dj } %>
+	<%= render :partial => 'shared/contact', :locals => { :contact => @contact } %>
+</div> <!-- right -->

@@ -1,0 +1,8 @@
+<% cache "sc_links" do %>
+	<div id="links" class="widget">
+		<h3>Links</h3>
+		<div class="small">
+			<%= links.content.present? ? links.content.html_safe : "No links to list." %>
+		</div>
+	</div>
+<% end %>

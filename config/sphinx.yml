@@ -1,0 +1,8 @@
+staging:
+  bin_path: '/home/birnvps/local/bin'
+  searchd_file_path: "/home/tyro2_staging/tyro2/shared/db/sphinx/staging"
+  
+production:
+  bin_path: '/home/birnvps/local/bin'
+  searchd_file_path: "/home/birnvps/tyro2/shared/db/sphinx/production"
+  

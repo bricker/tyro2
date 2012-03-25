@@ -1,0 +1,9 @@
+<% cache "sc_contact_box" do %>
+	<% contact ||= '' %>
+	<div id="contact" class="widget contact">
+		<h3>Contact</h3>
+		<div class="content">
+			<%= contact.content.present? ? contact.content.html_safe : "No contact info yet." %>
+		</div>
+	</div> <!-- contact -->
+<% end %>

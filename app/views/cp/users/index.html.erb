@@ -1,0 +1,20 @@
+<%= nav 'manage_tabs', 'list_users' %>
+<%= nav 'list_filters', params[:order] || 'name', params[:filter] || 'active' %>
+
+<%= box_wrapper do %>
+	<%= add_button "Add Users", new_cp_user_path if @current_user.allowed_to('manage_users_full') %>
+	<div class="list">
+		<% @users.each do |user| %>
+			<div class="row">
+				<div class="name"><%= link_to user.name, cp_user_path(user) %></div>
+				<div class="status"><%= user.roles.map{ |r| r.title }.join(", ") %></div>
+				<div class="links">
+					<%= link_to "View Profile", cp_user_path(user) %>
+					<%= link_to "Edit Profile", edit_cp_user_path(user) if @current_user.allowed_to('manage_user_info', 'manage_users_full') %>
+					<%= link_to(pluralize(user.total_strikes, "Strikes"), cp_user_strikes_path(user), :class => user.total_strikes >= 3 ? 'alert' : nil) if @current_user.allowed_to('manage_strikes') %>
+				</div>
+			</div>
+		<% end %>
+		<%= no_records_check(@users, "Users") %>
+	</div>
+<% end %>

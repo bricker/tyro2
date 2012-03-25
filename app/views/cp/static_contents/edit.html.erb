@@ -1,0 +1,28 @@
+<%= box_wrapper "Static Content", :no_tabs => true do %>
+	<%= form_for [:cp, @static_content] do |f| %>
+		<%= check_for_errors(@static_content) %>
+		<legend>Edit Content</legend>
+		<fieldset>
+			<ol>				
+				<li>
+					<label for="text_id">Text ID</label>
+					<div class="labeled-text"><%= @static_content.text_id %></div>
+				</li>
+				
+				<li>
+					<label for="description">Description</label>
+					<div class="labeled-text"><%= @static_content.description %></div>
+				</li>
+				
+				<li>
+					<label for="content">Content</label>
+					<%= f.text_area :content %>
+				</li>
+			</ol>
+		</fieldset>
+		
+		<fieldset>
+			<%= f.submit "Update" %>
+		</fieldset>
+	<% end %>
+<% end %>

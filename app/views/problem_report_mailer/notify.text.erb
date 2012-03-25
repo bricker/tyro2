@@ -1,0 +1,10 @@
+A new Problem Report has been opened in the Control Panel.
+
+Category: <%= @problem_report.category.humanize %>
+Topic: <%= @problem_report.title %>
+Submitted by: <%= @problem_report.user.name %> on <%= pretty_date(@problem_report.created_at, :time => true) %>
+
+Problem:
+<%= @problem_report.description %>
+
+Comments/Manage: <%= cp_problem_report_url @problem_report %>

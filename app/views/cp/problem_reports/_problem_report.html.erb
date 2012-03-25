@@ -1,0 +1,14 @@
+<div class='post'>
+	<h2 <%= "class='alert'" if !problem_report.closed %>><%= link_to problem_report.title, [:cp, problem_report] %></h2>
+	<div class='info'>
+		posted <%= distance_of_time_in_words(Time.zone.now, problem_report.created_at) %> ago by <%= link_to problem_report.user.name, cp_user_path(problem_report.user) %>. 
+		<%= link_to "#{problem_report.comments.count} comments", cp_problem_report_path(problem_report), :class => 'edit-link' %> 
+		<%= link_to 'edit', edit_cp_problem_report_path(problem_report), :class => 'edit-link' if @current_user.allowed_to('admin') or problem_report.user == @current_user %>
+		<%= link_to problem_report.closed ? 'reopen' : 'close', toggle_status_cp_problem_report_path(problem_report), :class => 'edit-link', :method => :post if @current_user.allowed_to('manage_problem_reports') %>
+	</div>
+	<div class='content'>
+		<%= link_to display_avatar(problem_report.user, 'tiny', :class => 'left'), cp_user_path(problem_report.user) %>
+		<%= display_message problem_report.description %>
+		<div class="clear"></div>
+	</div>
+</div>

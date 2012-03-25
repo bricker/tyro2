@@ -1,0 +1,4 @@
+<div class="sub-nav">
+	<%= nav_link "View Progress", cp_user_training_progress_path(@user), active_tabs.include?('view_progress') %>
+	<%= nav_link "Manage", edit_cp_user_training_progress_path(@user), active_tabs.include?('manage') if @current_user.allowed_to('train_users') %>
+</div>

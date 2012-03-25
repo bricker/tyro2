@@ -1,0 +1,22 @@
+<%= forum_header() {} %>
+
+<%= box_wrapper nil, :no_tabs => true do %>
+	<%= form_for [:cp, @forum] do |f| %>
+		<legend>Add Forum</legend>
+	  	<%= check_for_errors(@forum) %>
+		<fieldset>
+			<ol>
+				<%= render :partial => 'forum_form', :object => f %>
+				<li>
+					<label for="position">Position</label> 
+					<% position_options = Forum::PositionOptions %>
+					<%= f.select :position_before, position_options,
+							 	 :selected => position_options.last %>
+			  	</li>
+			</ol>
+		</fieldset>
+	  	<fieldset>
+	    	<%= f.submit "Add Forum" %>
+	  	</fieldset>
+	<% end %>
+<% end %>

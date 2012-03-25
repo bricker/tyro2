@@ -1,0 +1,8 @@
+<div class="tabs">
+	<%= nav_link "Details", cp_special_event_path(@special_event || @playlistable), active_tabs.include?("details") %>
+	<%= nav_link "Edit Details", edit_cp_special_event_path(@special_event || @playlistable), active_tabs.include?("edit_details") %>
+	<%= nav_link "Playlist", new_cp_special_event_playlist_path(@special_event || @playlistable), active_tabs.include?("playlist") %>
+	
+	<div class="nav-spacer">&nbsp;</div>
+	<%= nav_link "List Special Events", cp_special_events_path, false, :class => 'external' %>
+</div>

@@ -1,0 +1,8 @@
+<%= nav '/cp/shows/nav_partials/show_page_tabs', 'posts' %>
+
+<%= box_wrapper do %>
+	<%= add_button 'New Show Post', new_cp_show_post_path %>
+	<%= render @posts %>
+	<%= no_records_check(@posts, "Posts") %>
+	<%= paginate @posts %>
+<% end %>

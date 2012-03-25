@@ -1,0 +1,36 @@
+<%= form_for([:cp, user, record]) do |f| %>
+	<legend><%= form_title %></legend>
+	<%= check_for_errors(record) %>
+	<fieldset>
+		<ol>
+		  <li>
+			<label for="reason">Reason</label>
+			<%= f.select :reason, Strike::Reasons %>
+		  </li>
+		
+			<li>
+				<label for="offense_on">Date of Offense</label>
+				<%= f.text_field :offense_on, :placeholder => "choose date", :class => 'datepicker short', :value => datepicker_display(record.offense_on) %>
+			</li>
+			
+		  <li>
+		    <label for='severity'>Severity</label>
+		    <%= f.text_field :severity, :class => 'short' %>
+		  </li>
+		  
+		  <% unless record.new_record? %>
+			  <li>
+			    <label for='resolved'>Resolved?</label>
+			    <%= f.check_box :resolved %>
+			  </li>
+		  <% end %>
+		
+		  <%= fields_for @user.comments.build do |c| %>
+			<%= render :partial => '/cp/comments/comment_form', :object => c, :locals => { :placeholder => "Optional. Goes on Performance page." } %>
+		  <% end %>
+		</ol>
+	</fieldset>
+	<fieldset>
+	  <%= f.submit submit %>
+	</fieldset>
+<% end %>

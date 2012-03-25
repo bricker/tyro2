@@ -1,0 +1,5 @@
+<h2>BIRN Members</h2>
+<div class="tabs">
+	<%= nav_link "List Users", cp_users_path, active_tabs.include?('list_users') %>
+	<%= nav_link "Add Users", new_cp_user_path, active_tabs.include?('add_users') if @current_user.allowed_to('manage_users_full') %>
+</div>

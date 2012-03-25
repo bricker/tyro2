@@ -1,0 +1,94 @@
+<%= content_for :og_tags do %>
+	<meta property="fb:admins" content="<%= facebook_uids_string(@show.users + @management) %>"/>
+	<meta property="og:title" content="<%= @show.title %>"/>
+	<meta property="og:type" content="thebirn:show"/>
+	<meta property="og:url" content="http://thebirn.com<%= url_for @show %>"/>
+	<meta property="og:image" content="<%= @show.avatar.url(:original) %>"/>
+    <meta property="og:description"
+          content="<%= @show.description.present? ? @show.description : "Student Radio from Berklee College of Music. #{@show.genre}" %>"/>
+<% end %>
+
+<div id="show" class="two-cols">
+	<h2 class="with-gradient center"><%= link_to @show.title, stream_path(:channel => 'birn1'), :class => 'listen-link', "data-channel" => "birn1" %></h2>
+	<div id="left">
+		<div class='info'>
+			<% if @current_events.any?{|e| e.schedulable == @show} %>
+				<%= link_to "Live on BIRN1!", stream_path(:channel => 'birn1'), :class => 'listen-link', "data-channel" => "birn1" %> <%= livecam_icon %>
+			<% elsif @show.next.present? %>
+				<%= @show.next.starts_at.strftime("%A at %l%p EST")%>
+			<% else %>
+				This show is not scheduled.
+			<% end %>
+		</div> <!-- .info -->
+		<div class='info'>
+			<%= @show.genre.present? ? @show.genre : "Music" %>
+		</div>
+		
+		<div id="featured-dj" class="widget">
+			<h3>DJ Profile<%= 's' unless @show.users.count == 1 %></h3>
+			<div class="content">
+				<% @show.users.each do |user| %>
+					<%= render :partial => 'shared/dj_profile', :locals => { :record => user } %>
+				<% end %>
+				<%= no_records_check(@show.users, "Users", :message => "This show currently has no DJs")%>
+			</div>
+		</div>	<!-- dj-profiles -->
+	</div> <!-- left -->
+
+	<div class="middle">
+		<div class="sub-nav">
+			<%= link_to "Info & Comments", '#info-comments' %>
+			<%= link_to "Posts", '#posts' %>
+			<%= link_to "Playlists", '#playlists' %>
+		</div>
+		
+		<div id="contents">
+			<div id="info-comments-content" class="content-box show hidden">
+				<div class="description">
+					<%= link_to display_avatar(@show, 'medium'), @show.avatar.url(:original), :class => 'lightbox', :title => @show.title %>
+					<%= @show.description.present? ? @show.description : "#{@show.users.map(&:dj_name).to_sentence} Broadcasting from the BIRN Studios at Berklee!"%>
+					<div class="facebook-like-big">
+						<fb:like href="http://thebirn.com<%= url_for @show %>" ref="<%= truncate(@show.to_param) %>" send="false" layout="standard" show_faces="true" width="411px" colorscheme="dark" font="lucida grande"></fb:like>
+					</div>
+				</div>
+			
+				<div id="facebook" class="content-box">
+					<h2>Comments</h2>
+					<fb:comments href="http://thebirn.com<%= show_path(@show) %>" num_posts="3" width="575px" xid="<%= @show.to_param %>" colorscheme="dark" simple="true"></fb:comments>
+				</div>
+			</div> <!--- #info-comments -->
+		
+			<div id="posts-content" class="hidden">
+				<% @posts.each do |post| %>
+					<h3 class="announcement"><%=post.title%></h3>
+					<div class="content-box event description">
+						<span class='info'>posted on <strong><%= pretty_date(post.created_at)%></strong> by <strong><%= post.user.dj_name %></strong></span>
+						<%= display_message(post.body) %>
+					</div>
+				<% end %>
+				<%= no_records_check(@posts, "Posts") %>
+				<%= paginate @posts, :params => { :anchor => "posts" } %>
+			</div> <!-- posts -->
+	
+			<div id="playlists-content" class="hidden">
+				<% @events.each do |event| %>
+					<div class="playlist<%= " refresh-single" if @current_events.include?(event) %>" data-schedule-event-id="<%=event.id%>">
+						<h3 class="playlist-header"><%= pretty_date(event.starts_at) %></h3>
+						<div class='playlist-group'>
+							<%= render :partial => 'shared/playlist_entry', :collection => event.playlist_entries %>
+							<%= no_records_check(event.playlist_entries, "Playlist Entries", :message => "There is no playlist for this episode.")%>
+						</div> <!-- playlist-group -->
+					</div> <!-- playlist (for style) -->
+				<% end %>
+				<%= no_records_check(@events, "Playlists", :message => "There are no playlists for this show yet.") %>
+			</div> <!-- playlists-content (for tabs) -->
+		</div> <!-- #contents -->
+	
+	</div> <!-- middle -->
+</div> <!-- .two-cols -->
+
+<div id="right">
+	<%= render :partial => 'shared/explore', :locals => { :tags => @tags } %>
+	<%= render :partial => 'shared/todays_events', :locals => { :record => @todays_events, :current_events => @current_events } %>
+	<%= render :partial => 'shared/contact', :locals => { :contact => @contact } %>
+</div> <!-- right -->

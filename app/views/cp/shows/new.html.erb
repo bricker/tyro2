@@ -1,0 +1,23 @@
+<%= nav 'manage_tabs' %>
+
+<%= box_wrapper do %>
+
+	<%= form_for([:cp, @show]) do |f| %>
+	<legend>Add Show</legend>
+	  <%= check_for_errors(@show) %>
+
+	  <fieldset>
+		<ol>
+		  <li>
+			<label for="name">Show Name</label>
+			<%= f.text_field :title %>
+		  </li>
+		  <%= render :partial => '/cp/users/dj_field', :locals => { :record => @show, :f => f }%>
+		</ol>
+	  </fieldset>
+	  <fieldset>
+	    <%= f.submit "Add Show" %>
+	  </fieldset>
+	<% end %>
+
+<% end %>

@@ -1,0 +1,13 @@
+<%= forum_header(:forum => @forum) do %>
+	<%= add_button 'Start Topic', new_cp_forum_topic_path(@forum) %>
+<% end %>
+
+<%= paginate @topics %>
+	<div id='forum-list'>
+		<%= render :partial => 'topic', :collection => @topics, :locals => { :unread_topics => @unread_topics } %>
+		<%= no_records_check(@topics, "Topics") %>
+	</div>
+<%= paginate @topics %>
+
+<%= render :partial => 'legend' %>
+<%= render :partial => 'cp/subscriptions/subscribe', :locals => { :record => @forum } %>

@@ -1,0 +1,4 @@
+<div class="sub-nav">
+	<%= nav_link "Earliest First", cp_special_events_path(request.GET().merge(:order => 'asc')), active_tabs.include?('asc') %>
+	<%= nav_link "Latest First", cp_special_events_path(request.GET().merge(:order => 'desc')), active_tabs.include?('desc') %>
+</div>

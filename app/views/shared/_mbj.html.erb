@@ -1,0 +1,11 @@
+<div id="music-business-journal" class="widget">
+	<h3>Music Business Journal</h3>
+	<% records.each do |item| %>
+		<div class="item small linked">
+			<%= link_to item.title, item.link %><br />
+			<div class="meta right"><%= distance_of_time_in_words(Time.zone.now, item.date) %> ago</div>
+			<div class="clear"></div>
+		</div>
+	<% end %>
+	<%= no_records_check(records, "Feed Items", :message => "There is no feed data.")%>
+</div> <!-- mbj -->

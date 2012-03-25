@@ -1,0 +1,4 @@
+<div class="sub-nav">
+	<%= nav_link "Active", cp_shows_path(request.GET().merge(:list => 'active')), active_tabs.include?('active') %>
+	<%= nav_link "Inactive", cp_shows_path(request.GET().merge(:list => 'inactive')), active_tabs.include?('inactive') %>
+</div>

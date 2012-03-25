@@ -1,0 +1,6 @@
+<%= box_wrapper "TIN News", :no_tabs => true do %>
+	<%= @tin_news.try(:content) ? @tin_news.content.html_safe : "No news right now." %>
+	<p>
+		<%= link_to "Edit", edit_cp_static_content_path(@tin_news) if @current_user.allowed_to('edit_static_contents') and @tin_news.present? %>
+	</p>
+<% end %>

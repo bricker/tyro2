@@ -1,0 +1,20 @@
+<% hide_facebook ||= false %>
+<div class="content-box event">
+	<% if params[:action] == 'show' %>
+		<h2><%= event.title %></h2>
+	<% else %>
+		<h3><%= link_to event.title, event_path(event) %></h3>
+	<% end %>
+	<div class="info">
+		<% event_type = ScheduleEvent.get_event_type(event.event_type) %>
+		<%= pretty_date(event.starts_at, :time => true) %> on <%= link_to event_type[:title], stream_path(:channel => event_type[:channel]), :class => 'stream-link', "data-channel" => event_type[:channel] %>
+	</div>
+	<div class="description">
+		<%= event.description.html_safe %>
+	</div>
+	<% unless hide_facebook %>
+		<div class="facebook-like-big">
+			<fb:like href="http://thebirn.com<%= url_for event %>" ref="<%= truncate(event.to_param) %>" send="false" layout="standard" show_faces="true" colorscheme="dark" font="lucida grande"></fb:like>
+		</div>
+	<% end %>
+</div>

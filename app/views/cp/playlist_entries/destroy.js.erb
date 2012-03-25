@@ -1,0 +1,5 @@
+thisDiv = $("#playlist_entry_<%=@playlist_entry.id%>");
+thisDiv.slideUp();
+setTimeout(function() {
+	thisDiv.remove();
+}, 1000);

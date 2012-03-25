@@ -1,0 +1,60 @@
+<%= forum_header(:forum => @topic.forum) do %>
+	<% if @topic.locked %>
+		<div class="right locked-notice"><span class="locked"></span> This topic is locked.</div>
+	<% else %>
+		<%= link_to 'Reply', new_cp_topic_message_path(@topic), :id => 'add-button' %>
+	<% end %>
+<% end %>
+
+<%= content_for(:title, @topic.title) %>
+<% initial_message = @topic.initial_message %>
+
+<%= paginate @messages %>
+<div id='message-list'>
+	<h2>&raquo; <%= @topic.title %> 
+		<div class="status-icons">
+			<% if @topic.locked %><div class="locked">&nbsp;</div><% end %>
+			<% if @topic.global %><div class="global">&nbsp;</div><% end %>
+			<% if @topic.sticky %><div class="sticky">&nbsp;</div><% end %>
+		</div>
+	</h2>
+	<% @messages.each do |message| %>
+		<div class='message'>
+			<div class='left'>
+				<%= link_to display_avatar(message.user, "small"), cp_user_path(message.user) %>
+			</div>
+			<div class='right'>
+				<div class='info'>
+					<%= link_to message.user.name, cp_user_path(message.user), :class => 'name' %> <span class='time'><%= distance_of_time_in_words(Time.zone.now, message.created_at) %> ago</span>
+					<div class='manage'>
+						<% unless @topic.locked and !@current_user.allowed_to('manage_forums') %>
+							<%= link_to('edit', initial_message == message ? edit_cp_topic_path(@topic) : edit_cp_message_path(message)) + " - " if @current_user.allowed_to('manage_forums') or message.user == @current_user %> 
+						<% end %>
+						<%= link_to 'link', "##{message.id}", :name => message.id %> - 
+						<%= link_to 'quote', '#reply-box', :class => 'quote', 'data-who' => message.user.name, 'data-message' => message.body %>
+					</div>
+				</div>
+				<div class="body">
+					<%= display_message(message.body) %>
+					<% unless message.user.signature.blank? %><div class="signature"><%= simple_format(message.user.signature) %></div><% end %>
+				</div>
+			</div>
+			<div class='clear'></div>
+		</div>
+	<% end %>
+</div>
+<%= paginate @messages %>
+
+<% if @topic.locked %>
+	<br />
+	<span class="locked"></span> This topic is locked. It is not accepting any changes or new replies.
+<% else %>
+	<%= reply_box do %>
+		<%= form_for [:cp, @topic, @message] do |f| %>
+			<%= f.text_area :body, :size => '40x10' %>
+			<%= f.submit "Reply" %>
+		<% end %>
+	<% end %>
+<% end %>
+
+<%= render :partial => 'cp/subscriptions/subscribe', :locals => { :record => @topic } %>

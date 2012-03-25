@@ -1,0 +1,21 @@
+<%= nav 'main_tabs', params[:list] || 'today_and_later' %>
+<%= nav 'list_filters', params[:order] || 'asc' %>
+
+<%= box_wrapper do %>
+	<%= add_button 'Add Special Event', new_cp_special_event_path %>
+	
+	<div class="list event">	
+		<% @special_events.each do |special_event| %>
+			<div class="row">
+				<div class="name"><%= link_to special_event.title, cp_special_event_path(special_event) %></div>
+				<div class="status"><%= pretty_date(special_event.starts_at, :time => true) %></div>
+				<div class="links">
+					<%= link_to "Details", cp_special_event_path(special_event) %>
+					<%= link_to "Edit Details", edit_cp_special_event_path(special_event) %>
+					<%= link_to "Playlist", new_cp_special_event_playlist_path(special_event) %>
+				</div> 
+			</div>
+		<% end %>
+		<%= no_records_check(@special_events, "Special Events") %>
+	</div>
+<% end %>

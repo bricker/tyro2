@@ -1,0 +1,12 @@
+$('#event-dialog').html("<%= escape_javascript(render :partial => 'event_form', 
+																												:locals => { :schedule_event => @event, 
+																												:schedulable_type => params[:schedulable_type], 
+																												:schedulable => @schedulable,
+																												:title => 'Add Event' }) %>");
+$('.loading').spin(false);
+
+$(".show_token").tokenInput("/cp/shows/search.json", {
+	crossDomain: false,
+	hintText: 'Start typing a title to find a Show...',
+	tokenLimit: 1
+});

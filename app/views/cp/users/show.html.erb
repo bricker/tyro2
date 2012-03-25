@@ -1,0 +1,62 @@
+<%= nav 'profile_tabs', 'view_profile' %>
+
+<%= box_wrapper do %>
+	<div class="profile">
+		<div class="name"><%= @user.name %></div>
+		<div class="left">
+			<%= link_to display_avatar(@user, "medium"), @user.avatar.url(:original), :class => 'lightbox', :title => @user.name %>
+		</div>
+		<div class="right">
+			<div class="list-item">
+				<div class="label">DJ Name</div>
+				<div class="info"><%= @user.dj_name %></div>
+			</div>
+			
+			<div class="list-item">
+				<div class="label">Roles</div>
+				<div class="info"><%= @user.roles.map{|role| role.title}.to_sentence %></div>
+			</div>
+			
+			<div class="list-item">
+				<div class="label">About</div>
+				<div class="info"><%= simple_format(@user.about) %></div>
+			</div>
+			
+			<div class="list-item">
+				<div class="label">E-mail</div>
+				<div class="info"><%= @user.email %></div>
+			</div>
+			
+			<div class="list-item">
+				<div class="label">Additional Contact Info</div>
+				<div class="info"><% unless @user.aim_screenname.blank? %><strong>AIM: </strong><%= @user.aim_screenname %><br /><% end %>
+								  <% unless @user.phone_number.blank? %><strong>Phone: </strong><%= @user.phone_number %><br /><% end %>
+								  <%= simple_format(@user.additional_contact_info) unless @user.additional_contact_info.blank? %>
+								
+								  <% if @user.aim_screenname.blank? and @user.phone_number.blank? & @user.additional_contact_info.blank? %>
+									none
+								  <% end %></div>
+			</div>
+			
+			<div class="list-item">
+				<div class="label">Shows</div>
+				<div class="info"><%= @user.shows.empty? ? "none" : @user.shows.map{ |s| link_to s.title, cp_show_path(s) }.join(", ").html_safe %></div>
+			</div>
+			
+			<div class="list-item">
+				<div class="label">Additional Info</div>
+				<div class="info"><%= @user.name %> is currently <strong><%= @user.active ? "Active" : "Inactive" %></strong><br />
+									Member since <strong><%= @user.created_at.strftime("%B of %Y") %></strong></div>
+			</div>
+			
+			<% if @current_user.allowed_to('admin') %>
+				<div class="list-item">
+					<div class="label">Permissions</div>
+					<div class="info"><%= @user.permissions.empty? ? "none" : @user.permissions.map{ |p| p.title }.join(", ") %></div>
+				</div>
+			<% end %>
+		</div>
+	</div>
+	<div class="clear"> </div>
+<% end %>
+	

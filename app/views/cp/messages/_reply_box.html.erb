@@ -1,0 +1,40 @@
+<%= content_for :header do %>
+	<%= javascript_include_tag 'textinputs_jquery.js' %>
+<% end %>
+
+<a name='reply-box'>&nbsp;</a>
+<div id='reply-box'>
+	<div id='reply-format-box'>
+		<div id='tyro-code'>
+			<span class='format' id='bold'>Bold</span>
+			<span class='format' id='italic'>Italic</span>
+			<span class='format' id='underline'>Underline</span>
+			<span class='format' id='color'>Color</span>
+			<span class='format' id='size'>Size</span>
+			<span class='format' id='image'>Image</span>
+			<span class='format' id='link'>Link</span>
+			<span class='format' id='quote'>Quote</span>
+			<div id='smilies'>
+				<span class='format' id='smiley-toggle'>&nbsp;</span>
+				<div id='smilies-list'>
+					<span class='smiley' id='happy'><%= image_tag 'smilies/happy.png' %> :-)</span>
+					<span class='smiley' id='sad'><%= image_tag 'smilies/sad.png' %> :-(</span>
+					<span class='smiley' id='angry'><%= image_tag 'smilies/angry.png' %> >:-(</span>
+					<span class='smiley' id='tongue'><%= image_tag 'smilies/tongue.png' %> :-P</span>
+					<span class='smiley' id='wink'><%= image_tag 'smilies/wink.png' %> ;-)</span>
+					<span class='smiley' id='grin'><%= image_tag 'smilies/grin.png' %> :-D</span>
+					<span class='smiley' id='cool'><%= image_tag 'smilies/cool.png' %> 8-)</span>
+					<span class='smiley' id='blush'><%= image_tag 'smilies/blush.png' %> :-[</span>
+					<span class='smiley' id='rolleyes'><%= image_tag 'smilies/icon_rolleyes.gif' %> :roll:</span>
+					<span class='smiley' id='neutral'><%= image_tag 'smilies/icon_neutral.gif' %> :-|</span>
+					<span class='smiley' id='undecided'><%= image_tag 'smilies/undecided.png' %> :-/</span>
+				</div>
+			</div>
+		<div class="clear"></div>
+		</div>
+	</div>
+	
+	<%= body %>	
+
+	<div class="clear"></div>
+</div>

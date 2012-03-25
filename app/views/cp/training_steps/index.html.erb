@@ -1,0 +1,12 @@
+<%= box_wrapper "Training Steps", :no_tabs => true do %>
+	<% @training_steps.each do |step| %>
+		<div class="list-item one-col">
+			<div class="label"><%= step.title %></div>
+			<div class="info"><strong><%= pluralize(step.users.count, "noob") %> <%= step.users.count == 1 ? 'has' : 'have' %> completed this step.</strong> 
+									  <%= link_to "manage", edit_cp_training_step_path(step), :class => 'edit-link note' if @current_user.allowed_to('manage_training_steps') %><br />
+									  <%= step.users.map{|user| link_to(user.name, cp_user_path(user))}.join(', ').html_safe %></div>
+		</div>
+	<% end %>
+	<%= no_records_check @training_steps, "Training Steps" %><br />
+	<%= link_to "Add Step", new_cp_training_step_path if @current_user.allowed_to('manage_training_steps') %>
+<% end %>

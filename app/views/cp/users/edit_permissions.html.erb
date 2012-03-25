@@ -1,0 +1,23 @@
+<%= nav 'profile_tabs', 'edit_profile' %>
+<%= nav 'edit_profile_nav', 'permissions' %>
+
+<%= box_wrapper do %>
+	<%= form_for [:cp, @user], :url => update_permissions_cp_user_path do |f| %>
+		<%= check_for_errors(@user) %>
+		<fieldset>
+			<ol>
+			  <% @permissions.each do |permission| %>
+				  <li>
+					<%= check_box_tag "user[permission_ids][]", permission.id, @user.permissions.include?(permission), :id => "user_permission_id_#{permission.id}" %>
+					<%= permission.title %> - <%= permission.description %>
+				  </li>
+			  <% end %>
+			</ol>
+		</fieldset>
+
+		<fieldset>
+			<%= f.hidden_field :id %>
+			<%= f.submit "Update Permissions" %>
+		</fieldset>
+	<% end %>
+<% end %>

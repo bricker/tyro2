@@ -1,0 +1,70 @@
+<%= check_for_errors(@user) %>
+
+<fieldset>
+	<legend>Contact Information</legend>
+	<ol>
+	  <li>
+		<label for="email">Email</label>
+		<%= f.text_field :email %>
+	  </li>
+
+	  <li>
+		<label for="phone_number">Phone</label>
+		<%= f.text_field :phone_number %>
+	  </li>
+
+	  <li>
+		<label for="facebook_uid">Facebook User ID</label>
+		<%= f.text_field :facebook_uid, :placeholder => "jsmith" %>
+	  </li>
+	
+	  <li>
+		<label for="aim_screenname">AIM</label>
+		<%= f.text_field :aim_screenname %>
+	  </li>
+
+	  <li>
+		<label for="additional_contact_info">Additional Contact Info</label>
+		<%= f.text_area :additional_contact_info, :size => '40x7' %>
+	  </li>	
+	</ol>
+</fieldset>
+
+<fieldset>
+	<legend>DJ Information</legend>
+	<ol>
+	  <li>
+		<label for="dj_name">DJ Name</label>
+		<%= f.text_field :dj_name %>
+	  </li>
+
+	  <li>
+		<label for="about">About</label>
+		<%= f.text_area :about, :size => '40x7' %>
+	  </li>
+
+	  <li>
+		<label for="forum_signature">Forum Signature</label>
+		<%= f.text_area :signature, :size => '40x7' %>
+	  </li>
+	</ol>
+</fieldset>
+
+<fieldset>
+	<legend>DJ Picture</legend>
+	<ol>
+	  <li>
+		<label>Current Picture</label>
+		<%= display_avatar(User.unscoped.find(@user.id), "medium") %> <%# OPTIMIZE Make this better %>
+	  </li>
+
+	  <li>
+		<label for="avatar">Upload New Picture</label>
+		<%= f.file_field :avatar %>
+	  </li>
+	</ol>
+</fieldset>
+
+<fieldset>
+  <%= f.submit "Update Profile" %>
+</fieldset>

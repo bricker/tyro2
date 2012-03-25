@@ -1,0 +1,5 @@
+<div class="dj-container">
+	<div class="name"><%= record.dj_name %></div><br />
+	<%= link_to display_avatar(record, 'small'), record.avatar.url(:original), :class => 'lightbox', :title => record.dj_name %><br />
+	<%= record.about %>
+</div>

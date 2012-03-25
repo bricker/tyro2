@@ -1,0 +1,24 @@
+<div id="left">
+	<%= render :partial => 'shared/blogs', :locals => { :records => @blogs }%>
+	<%= render :partial => 'shared/twitter' %>
+	<%= render :partial => 'shared/mbj', :locals => { :records => @mbj_items } %>
+	<%= render :partial => 'shared/links', :locals => { :links => @links } %>
+</div> <!-- left -->
+
+<div id="about" class="middle">
+	<h2>The Berklee Internet Radio Network</h2>
+	<div class="sub-nav">
+		<%= link_to "Channels", channels_path, :class => params[:action] == 'channels' ? 'active' : nil %>
+		<%= link_to "Contact", contact_path, :class => params[:action] == 'contact' ? 'active' : nil %>
+		<%= link_to "About", about_path, :class => params[:action] == 'history' ? 'active' : nil %>
+		<%= link_to "Submit Your Music", submissions_path, :class => params[:action] == 'submissions' ? 'active' : nil %>
+	</div>
+	<%= @content.content.present? ? @content.content.html_safe : "Check back soon for more information." %>	
+</div>
+
+<div id="right">
+	<%= render :partial => 'shared/explore', :locals => { :tags => @tags } %>
+	<%= render :partial => 'shared/todays_events', :locals => { :record => @todays_events, :current_events => @current_events } %>
+	<%= render :partial => 'shared/featured_dj', :locals => { :record => @featured_dj } %>
+	<%= render :partial => 'shared/contact', :locals => { :contact => @contact } %>
+</div> <!-- right -->

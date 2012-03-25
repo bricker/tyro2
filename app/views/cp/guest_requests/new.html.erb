@@ -1,0 +1,61 @@
+<%= box_wrapper "Guest Request Form", :no_tabs => true do %>
+	<%= form_tag cp_guest_request_path, :method => :post do %>
+		<legend>Submit a Guest Request</legend>
+		<fieldset>
+			<ol>
+				<li>
+					<label for="show">Show</label>
+					<%= select_tag "show", options_from_collection_for_select(@shows, "id", "title") %>
+				</li>
+
+				<li>
+					<label for='appearance_date'>Date of Guest Appearance</label>
+					<%= text_field_tag "appearance_date", :placeholder => "choose date", :class => 'datepicker short', :value => datepicker_display(params["appearance_date"]) %>
+				</li>
+
+				<li>
+					<label for='guest_name'>Name of Guest/Band</label>
+					<%= text_field_tag "guest_name" %>
+				</li>
+
+				<li>
+					<label for="guest_information">Guest Information</label>
+					<span class="info">List of Guest Names and Instruments if applicable</span>
+					<%= text_area_tag :guest_information, :size => "40x7" %>
+				</li>
+				
+				<li>
+					<label for="artist_website">Artist's Website</label>
+					<%= text_field_tag :artist_website, :placeholder => "optional", :size => "40x7" %>
+				</li>
+				
+				<li>
+					<label for="popularity">Popularity</label>
+					<%= radio_button_tag :popularity, "national" %> National
+					<%= radio_button_tag :popularity, "local" %> Local
+				</li>
+				
+				<li>
+					<label for="appearance_type">Nature of Appearance</label>
+					<span class="info">Select one or both</span>
+					<%= check_box_tag "appearance_type[]", "interview" %> Interview
+					<%= check_box_tag "appearance_type[]", "performance" %> Performance
+				</li>
+				
+				<li>
+					<label for="live_room_needed">Live Room Needed</label>
+					<%= check_box_tag "live_room_needed" %>
+				</li>
+				
+				
+				<li>
+					<label for="reason">Reason for Guest</label>
+					<%= text_area_tag :reason, :size => "40x7" %>
+				</li>
+			</ol>
+		</fieldset>
+		<fieldset>
+		  <%= submit_tag "do it." %>
+		</fieldset>
+	<% end %>
+<% end %>

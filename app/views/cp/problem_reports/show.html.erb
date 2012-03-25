@@ -1,0 +1,7 @@
+<%= nav 'main_tabs' %>
+
+<%= box_wrapper do %>
+	<%= render @problem_report %>
+	<h2 class='comments'>Comments</h2>
+	<%= render :partial => 'cp/comments/comments', :locals => { :record => @problem_report } %>
+<% end %>

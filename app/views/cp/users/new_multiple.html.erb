@@ -1,0 +1,16 @@
+<%= nav "manage_tabs", "add_users" %>
+<%= nav "add_users_nav", "multiple_users" %>
+
+<%= box_wrapper do %>
+	<%= form_tag create_multiple_cp_users_path do %>
+		<fieldset>
+			<ol><li>
+				<%= text_area_tag :name_email_pairs, nil, :placeholder => "Jane Doe <janedoe@gmail.com> John Doe <johndoe@gmail.com>", :size => '70x15', :style => "width: 600px;" %>
+			</li></ol>
+		</fieldset>
+		<fieldset>
+			<%= submit_tag "Add Users" %>
+		</fieldset>
+	<% end %>
+	Note: Format is crucial. Only 20 at a time. No more than 100 additions per hour (our host thinks we're spamming people with e-mails if you send out too many).
+<% end %>

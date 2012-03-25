@@ -1,0 +1,8 @@
+<%= nav 'profile_tabs', 'edit_profile' %>
+<%= nav 'edit_profile_nav', 'profile' %>
+
+<%= box_wrapper do %>
+	<%= form_for [:cp, @user], :html => { :multipart => true } do |f| %>
+		<%= render :partial => 'edit_fields', :locals => { :f => f }%>
+	<% end %>
+<% end %>

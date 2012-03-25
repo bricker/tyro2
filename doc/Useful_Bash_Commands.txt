@@ -1,0 +1,25 @@
+Useful terminal things:
+
+Manually run the backup script:
+$ cd ~/tyro2/current
+$ bash script/mysql_backup.sh 
+
+Show last 500 lines of a log file:
+$ cd ~/tyro2/shared/log
+$ tail -n 500 production.log
+
+Show full log file:
+$ cat production.log
+
+Restart (or stop, or start) delayed_job workers:
+$ cd ~/tyro2/current
+$ RAILS_ENV=production script/delayed_job restart
+
+
+####### APP SETUP #########
+## Run in Rails Root
+Create database and tables:
+rake db:setup
+
+Seed database:
+rake db:seed

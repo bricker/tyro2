@@ -1,0 +1,16 @@
+<li>
+	<label for="tag_tokens">Tags</label>
+	<%= f.text_field :tag_tokens, :class => 'tags-input', :value => record.tags.empty? ? "Music" : record.tag_tokens %>
+</li>
+
+<%= content_for :javascript do %>
+	<script>
+	$(document).ready(function() {
+		$('.tags-input').tagsInput({ // tagsInput
+			autocomplete_url: <%=raw @tags.map(&:name).to_json %>,
+			width: '300px',
+			height: '100px'
+		});
+	});
+	</script>
+<% end %>

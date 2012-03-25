@@ -1,0 +1,13 @@
+<div class='info genre'>
+	<%= event.genre.present? ? event.genre : "Music" %>
+</div>
+
+<div class="right-area">
+	<div class="description">
+		<%= event.description.present? ? event.description : "#{event.users.map(&:dj_name).to_sentence} Broadcasting from the BIRN Studios at Berklee!"%>
+	</div>
+	
+	<div class="facebook-like-big">
+		<fb:like href="http://thebirn.com<%= url_for event %>" ref="<%= truncate(event.to_param) %>" send="false" layout="standard" show_faces="true" width="411px" colorscheme="dark" font="lucida grande"></fb:like>
+	</div>
+</div>

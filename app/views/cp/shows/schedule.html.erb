@@ -1,0 +1,4 @@
+<%= nav 'profile_tabs', 'schedule' %>
+<%= box_wrapper do %>
+	<%= render :partial => 'cp/schedule_events/calendar', :locals => { :schedulable_type => "Show", :schedulable_id => @show.id } %>
+<% end %>

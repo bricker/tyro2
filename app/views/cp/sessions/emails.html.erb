@@ -1,0 +1,8 @@
+<%= box_wrapper "Login Email list", :no_tabs => true do %>
+	Hi! We changed the way you login. Instead of a username, you'll now just use your e-mail. Your password is the same as it was before.<br />
+	If you've forgotten what your e-mail was at the BIRN, find your name on the folllowing list:<br /><br />
+	
+	<% @users.each do |u| %>
+		<%= u.name %> - <%= u.email %><br />
+	<% end %>
+<% end %>

@@ -1,0 +1,7 @@
+You are receiving this message because you are subscribed to a topic in the BIRN Control Panel.
+
+There has been a new Reply to "<%= @topic.title %>":
+Posted by: <%= @message.user.name %>
+Link to Topic: <%= cp_topic_messages_url(@topic) %>
+
+To unsubscribe from this Topic, go to: <%= cp_topic_unsubscribe_url(@topic) %>

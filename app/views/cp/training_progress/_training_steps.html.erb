@@ -1,0 +1,13 @@
+<%= box_wrapper do %>
+	<h3>Completed <strong><%= user.completed_training_steps.count %> out of <%= training_steps.count %></strong> steps.</h3>
+	<div class="list training-steps">
+		<% training_steps.each do |step| %>
+			<div class="row<%= ' complete' if user.training_steps.include?(step) %>">
+				<div class="name"><strong><%= step.title %></strong></div>
+				<% if user.training_steps.include?(step) %>
+					<div class="status">Completed on <%= pretty_date(user.completed_training_steps.completed_on(step)) %></div>
+				<% end %>
+			</div>
+		<% end %>
+	</div>
+<% end %>

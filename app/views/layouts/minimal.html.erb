@@ -1,0 +1,11 @@
+<!DOCTYPE>
+	<head>
+		<%= javascript_include_tag 'application' %>
+		<%= yield :header %>
+		<title><%= yield(:title).blank? ? "The BIRN" : yield(:title) %></title>
+		<%= stylesheet_link_tag "application" %>
+	</head>
+  <body>
+    <%= yield %>
+  </body>
+</html>

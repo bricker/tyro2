@@ -1,0 +1,5 @@
+<%= nav '/cp/users/nav_partials/profile_tabs', 'strikes' %>
+
+<%= box_wrapper do %>
+	<%= render :partial => 'strike_form', :locals => { :user => @user, :record => @strike, :form_title => "Add Strike for #{@user.name}", :submit => "Add" } %>
+<% end %>

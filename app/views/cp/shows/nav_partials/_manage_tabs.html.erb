@@ -1,0 +1,4 @@
+<div class="tabs">
+	<%= nav_link "List Shows", cp_shows_path, active_tabs.include?('list_shows') %>
+	<%= nav_link "Schedule", full_schedule_cp_shows_path, active_tabs.include?('schedule') if @current_user.allowed_to('manage_schedule') %>
+</div>

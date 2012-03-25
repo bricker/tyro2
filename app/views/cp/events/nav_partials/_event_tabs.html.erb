@@ -1,0 +1,10 @@
+<h2><%= @event.title %></h2>
+
+<div class="tabs">
+	<%= nav_link "Details", cp_event_path(@event), active_tabs.include?('details') %>
+	<%= nav_link "Edit Details", edit_cp_event_path(@event), active_tabs.include?('edit_details') %>
+	<%= nav_link "Playlist", playlist_cp_event_path(@event), active_tabs.include?('playlist') %>
+	
+	<span class="nav-spacer">&nbsp;</span>
+	<%= nav_link "List Events", cp_events_path, false, :class => 'external' %>
+</div>

@@ -1,0 +1,7 @@
+<% optional ||= false %>
+<li>
+	<label for="user_tokens">DJs
+		<% if optional %><span class="note"> (Optional)</span><% end %>
+	</label>
+  	<%= f.text_field :user_tokens, :class => 'user_tokens', "data-pre" => record.new_record? ? nil : record.users.map {|u| {:id => u.id, :name => u.name}}.to_json %>
+</li>

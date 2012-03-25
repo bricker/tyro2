@@ -1,0 +1,9 @@
+<h2><%= @show.title %></h2>
+<div class="tabs">
+	<%= nav_link "Posts", cp_show_posts_path(@show), active_tabs.include?('posts') %>
+	<%# nav_link "Shouts", cp_show_shouts_path(@show), active_tabs.include?('shouts') %>
+	<%# nav_link "Substitutes", cp_show_substitutes_path(@show), active_tabs.include?('substitutes') %>
+	<%= nav_link "Playlist", playlist_cp_show_path(@show), active_tabs.include?('playlist') if @show.schedule_events.up_to(ScheduleEvent::UpTo).present? %>
+	<span class="nav-spacer">&nbsp;</span>
+	<%= nav_link "Show Profile", cp_show_path(@show), false, :class => 'external' %>
+</div>

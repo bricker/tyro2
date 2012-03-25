@@ -1,0 +1,12 @@
+<%# there are no tabs here because this is a polymorphic edit page, ie it can be for a user, problem report, etc. %>
+<%= box_wrapper "Edit Comment", :no_tabs => true do %>
+	<%= form_for [:cp, @comment] do |f| %>
+		<%= check_for_errors(@comment) %>
+		<%= render :partial => 'comment_form', :object => f %>
+		<fieldset>
+			<%= f.submit "Update Comment" %>
+		</fieldset>
+	<% end %>
+	
+	<%= link_to "Delete Comment", cp_comment_path(@comment), :method => 'delete', :confirm => "Delete this comment?", :class => 'delete-link' %>
+<% end %>

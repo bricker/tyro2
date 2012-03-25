@@ -1,0 +1,4 @@
+<div class="sub-nav">
+	<%= nav_link "Profile", edit_cp_profile_path, active_tabs.include?('profile') %>
+	<%= nav_link "Password", edit_password_cp_profile_path, active_tabs.include?('password') if @current_user.allowed_to('manage_users_full') or @current_user == @user %>
+</div>

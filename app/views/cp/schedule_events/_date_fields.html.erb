@@ -1,0 +1,15 @@
+<li>
+	<label for="starts_at">Starts on</label>
+	<%= s.text_field :starts_at_date, :value => datepicker_display(record.starts_at) || record.schedule_event.starts_at_date, :placeholder => 'choose date', :class => 'datepicker short start_date' %>
+					
+	<span class="field-spacer">at</span>
+	<%= s.text_field :starts_at_time, :value => datepicker_display(record.starts_at, :part => 'time') || record.schedule_event.starts_at_time, :placeholder => '8:00pm', :class => 'short' %>
+</li>
+
+<li>
+	<label for="ends_at">Ends on</label>
+	<%= s.text_field :ends_at_date, :value => datepicker_display(record.ends_at) || record.schedule_event.ends_at_date, :placeholder => 'choose date', :class => 'datepicker short end_date' %>
+					
+	<span class="field-spacer">at</span>
+	<%= s.text_field :ends_at_time, :value => datepicker_display(record.ends_at, :part => 'time') || record.schedule_event.ends_at_time, :placeholder => '10:00pm', :class => 'short' %>
+</li>

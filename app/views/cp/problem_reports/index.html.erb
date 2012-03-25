@@ -1,0 +1,9 @@
+<%= nav 'main_tabs', params[:list] || 'open' %>
+<%= nav 'sub_nav', params[:category] || 'all', params[:order] || 'desc' %>
+
+<%= box_wrapper do %>
+	<%= add_button 'New Problem Report', new_cp_problem_report_path %>
+	<%= paginate @problem_reports %>
+	<%= render @problem_reports %>
+	<%= no_records_check(@problem_reports, "Problem Reports") %>
+<% end %>

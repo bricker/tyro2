@@ -1,0 +1,25 @@
+<div id="comments">
+	<% record.comments.each do |comment| %>
+		<div class='comment'>
+			<div class='left'>
+				<%= link_to display_avatar(comment.commenter, "tiny"), cp_user_path(comment.commenter) %>
+				<div class='clear'></div>
+			</div>
+			<div class='comment-right'>
+				<div class='info'><%= link_to comment.commenter.name, cp_user_path(comment.commenter), :class => 'name' %> on <%= pretty_date(comment.created_at) %> <%= link_to('edit', edit_cp_comment_path(comment), :class => 'edit-link') if @current_user.allowed_to('admin') or comment.commenter == @current_user %></div>
+				<div class='body'><%= display_message(comment.body) %></div>
+			</div>
+			<div class='clear'></div>
+		</div>
+	<% end %>
+	<%= no_records_check(record.comments, "Comments") %>
+</div>
+
+<div class='bottom-container'>
+	<%= form_for [:cp, record, Comment.new] do |f| %>
+		<%= render :partial => '/cp/comments/comment_form', :object => f %>
+		<fieldset>
+			<%= f.submit "Add Comment" %>
+		</fieldset>
+	<% end %>
+</div>
