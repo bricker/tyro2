@@ -1,12 +1,7 @@
 <% schedulable_type ||= nil
    schedulable_id ||= nil %>
 
-<%= content_for :stylesheets do %>
-	<%= stylesheet_link_tag 'fullcalendar.css' %>
-<% end %>
-
 <%= content_for :javascript do %>
-	<%= javascript_include_tag 'fullcalendar.js' %>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			var date = new Date(<%= Time.zone.now.to_i %>);
